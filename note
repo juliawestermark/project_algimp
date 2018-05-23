@@ -1,0 +1,4 @@
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+CFLAGS = -g -Wall -Wextra -std=c11 -Wno-parentheses
+
