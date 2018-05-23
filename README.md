@@ -1,7 +1,7 @@
 # project_algimp
 
 
-##GIT
+## GIT
 
 Choose directory where we look at
 git init
@@ -30,7 +30,7 @@ git checkout -b [name of new branch]
 Add all the files
 git add -A 
 
-##PUSH/PULL
+## PUSH/PULL
 
 Pull up to date code
 git pull origin [name of branch]
@@ -39,6 +39,6 @@ Push your code to GitHub
 git push origin [name of branch]
 
 
-##STEPS FOR ADDING FILE
+## STEPS FOR ADDING FILE
 add-commit-pull-push
 
