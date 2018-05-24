@@ -144,8 +144,6 @@ rat divq(rat x, rat y)
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
 {
-
-<<<<<<< Updated upstream
 	int r;
 	int s;
 
@@ -266,9 +264,4 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 		/** Gå till steg 2 */
 
 		return 0;
-=======
-int ia[rows][cols];
-
-	return 0;
->>>>>>> Stashed changes
 }
