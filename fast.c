@@ -179,28 +179,53 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	n1 = 0;
 	n2 = 0;
 
-	for (int j = 0; j < s; j++)
+	for (int i = 0; i < ineq; i++)
 	{
-
+		rat ttemp[var+1];
+		for(int j = 0 ; j < var ; j++) {
+			ttemp[j] = t[i][j];
+		}
+		ttemp[var] = q[i];
 		/** STEG 2 */
-		if (t[r][j] > 0)
+		if (t[j][var].p > 0)
 		{
 			/** Pusha till början av lista */
-			pos = add(pos,t[][j])
+			add(pos,ttemp)
 			n1++;
 			n2++;
 		}
-		else if (t[r][j] < 0)
+		else if (t[i][var] < 0)
 		{
+			add(neg,ttmep)
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
+			add(zeros, ttemp)
 		{
 			/** Lägg till sistsist */
 		}
 	}
 /** STEG 3 */
+
+	for (int i = 0 ; i < n2 ; i++)
+	{
+		for(int j = 0 ; j < var ; j++)
+		{
+			t[i][j] = divq(t[i][j],t[i][var-1]);
+		}
+		q[i] = divq(t[i]/t[i][var-1]);
+	}
+
+#if 0
+hur gör vi med negativa tal????
+#endif
+
+
+
+
+
+
 	for (int i = 1; i < r - 1)
 	{
 		for (int j = 1; j < n2)
