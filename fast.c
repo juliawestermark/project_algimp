@@ -165,9 +165,15 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	{
 		for (int j = 0; j < cols; j++)
 		{
-			t[i][j] = a[i][j];
-			q[j] = c[j];
+			rat ttemp;
+			rat qtemp;
+			ttemp.p =(long long)a[i][j];
+			ttemp.q = 1;
+			t[i][j] = ttemp;
 		}
+		qtemp.p = (long long)c[i];
+		qtemp.q = 1;
+		q[i] = qtemp;
 	}
 
 	n1 = 0;
@@ -175,7 +181,7 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 
 	for (int j = 0; j < s; j++)
 	{
-		
+
 		/** STEG 2 */
 		if (t[r][j] > 0)
 		{
@@ -194,7 +200,7 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 			/** Lägg till sistsist */
 		}
 	}
-	/** STEG 3 */
+/** STEG 3 */
 	for (int i = 1; i < r - 1)
 	{
 		for (int j = 1; j < n2)
