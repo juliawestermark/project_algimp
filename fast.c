@@ -7,8 +7,8 @@ static list_t *freeList;
 
 typedef struct rational
 {
-	int p;
-	int q;
+	long long p;
+	long long q;
 } rat;
 
 /** typedef struct list_t list_t; */
@@ -144,8 +144,8 @@ rat divq(rat x, rat y)
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
 {
-	int r;
-	int s;
+	int var; /** variables, r */
+	int ineq; /** inequalities, s */
 
 	int n1;
 	int n2;
@@ -157,13 +157,13 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	rat t[rows][cols];
 	rat q[cols];
 
-	r = rows;
-	s = cols;
+	var = cols;
+	ineq = rows;
 
 	/** STEG 1 */
 	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < rows; j++)
+		for (int j = 0; j < cols; j++)
 		{
 			t[i][j] = a[i][j];
 			q[j] = c[j];
