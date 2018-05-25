@@ -277,8 +277,84 @@ hur gör vi med negativa tal????
 	}
 
 	/** STEG 6 */
-
+	#if 0
 	b[r] <= B[r] Add eq from step 2 sprim = s - n2 + n1 * (n2 - n1);
+	#endif
+
+
+	rat ttemp[n1*(n2-n1)][var-1];
+
+
+
+ttemp[n1*(n2-n1)][var]
+int count = 0 ;
+while (pos != NULL){}
+
+	for(int j=0; j < var; j++){
+		ttemp[count][j] = pos.data[j];
+	}
+	pos = pos->next;
+	count++;
+	}
+while (neg != NULL) {
+
+	for(int j=0; j < var; j++){
+	ttemp[count][j] = neg.data[j];
+	}
+	neg = neg->next;
+	count++;
+}
+
+
+
+
+
+
+
+negstart = neg;
+for (int i = 0 ; i < n1 ; i++) {
+	postemp = pos;
+	negcount = negstart;
+	for (int k = n1; k < n2 ; k++){
+		negtemp = neg;
+
+		for (int j = 0; j < varprim; j++) {
+			postemp = pos;
+			negtemp = neg;
+			ttemp[i*n2+k-n1][j] = subq(t[i][j],t[k][j]);
+			ttemp[i*n2+k-n1][j] = subq(postemp.data,negcount.data);
+			pos = pos->next;
+			negcount= negcount->next;
+			if (i == n1) måsvinge
+				neg = NULL;
+
+		}
+		qtemp[i*n2+k-n1]= subq(q[i],q[k]);
+		qtemp[i*n2+k-n1]= subq(postemp.data,negcount.data);
+	}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	if (sprim > 0)
 	{
 		/** Gå till steg 7 */
