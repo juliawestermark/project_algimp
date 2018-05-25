@@ -277,35 +277,31 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	b[r] <= B[r]
 	Add eq from step 2
 	sprim = s - n2 + n1 * (n2 - n1);
-	#endif 
+	#endif
 
-	int ineqprim = n1* (n2-n1);
-	int varprim = var - n2 + ineqprim;
-
-
-
-	rat ttemp[n1*(n2-n1)][var-1];
+	int ineqprim = ineq - n2 + n1* (n2-n1);
+	int varprim = var -1;
 
 
 
-ttemp[n1*(n2-n1)][var]
-int count = 0 ;
-while (pos != NULL){}
-
-	for(int j=0; j < var; j++){
-		ttemp[count][j] = pos.data[j];
-	}
-	pos = pos->next;
-	count++;
-	}
-while (neg != NULL) {
-
-	for(int j=0; j < var; j++){
-	ttemp[count][j] = neg.data[j];
-	}
-	neg = neg->next;
-	count++;
-}
+// ttemp[n1*(n2-n1)][var]
+// int count = 0 ;
+// while (pos != NULL){}
+//
+// 	for(int j=0; j < var; j++){
+// 		ttemp[count][j] = pos.data[j];
+// 	}
+// 	pos = pos->next;
+// 	count++;
+// 	}
+// while (neg != NULL) {
+//
+// 	for(int j=0; j < var; j++){
+// 	ttemp[count][j] = neg.data[j];
+// 	}
+// 	neg = neg->next;
+// 	count++;
+// }
 
 
 
@@ -324,7 +320,7 @@ for (int i = 0 ; i < n1 ; i++) {
 			ttemp[i*n2+k-n1][j] = subq(postemp.data,negcount.data);
 			pos = pos->next;
 			negcount= negcount->next;
-			if (i == n1) måsvinge
+			if (i == n1-1) måsvinge
 				neg = NULL;
 
 		}
@@ -333,7 +329,15 @@ for (int i = 0 ; i < n1 ; i++) {
 	}
 
 }
-
+int count = 0 ;
+while (zeros != NULL) {
+	for (int j = 0 ; j < n-n2; j++){
+		ttemp[n1*(n2-n1)+count][j] = zeros.data[j];
+	}
+	qtemp[n1*(n2-n1)+count] = zeros.data[var];
+	zeros = zeros->next;
+	count++;
+}
 	if (varprim > 0)
 	{
 		/** Gå till steg 7 */
@@ -344,8 +348,8 @@ for (int i = 0 ; i < n1 ; i++) {
 	}
 
 	/** STEG 7 */
-	// r = r - 1;
-	// s = sprim;
+	var = var - 1;
+	ineq = ineqprim;
 	// Define new rxs matrix and new s vector
 		/** Gå till steg 2 */
 
