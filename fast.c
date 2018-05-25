@@ -217,24 +217,19 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 		q[i] = divq(t[i]/t[i][var-1]);
 	}
 
-#if 0
-hur gör vi med negativa tal????
-#endif
+// #if 0
+// hur gör vi med negativa tal????
+// #endif
 
-
-
-
-
-
-	for (int i = 1; i < r - 1)
-	{
-		for (int j = 1; j < n2)
-		{
-			t[i][j] = t[i][j] / t[r][j];
-			q[j] = q[j] / t[r][j];
-			/** Hur gör vi med negativa tal? */
-		}
-	}
+	// for (int i = 1; i < r - 1)
+	// {
+	// 	for (int j = 1; j < n2)
+	// 	{
+	// 		t[i][j] = t[i][j] / t[r][j];
+	// 		q[j] = q[j] / t[r][j];
+	// 		/** Hur gör vi med negativa tal? */
+	// 	}
+	// }
 
 	/** STEG 4 */
 	if (n2 > n1)
@@ -263,9 +258,9 @@ hur gör vi med negativa tal????
 	}
 	else
 	{ /** r=1 */
-		for (int j = n2 + 1; j <= s; j++)
+		for (int i = n2 + 1; i <= ineq; i++)
 		{
-			if (b[1] > B[1] || q[j] < 0)
+			if (b[1] > B[1] || q[i] < 0)
 			{
 				return 0;
 			}
@@ -278,8 +273,25 @@ hur gör vi med negativa tal????
 
 	/** STEG 6 */
 
-	b[r] <= B[r] Add eq from step 2 sprim = s - n2 + n1 * (n2 - n1);
-	if (sprim > 0)
+	#if 0
+	b[r] <= B[r]
+	Add eq from step 2
+	sprim = s - n2 + n1 * (n2 - n1);
+	#endif 
+
+	int ineqprim = n1* (n2-n1);
+	int varprim = var - n2 + ineqprim;
+
+
+	for (int i = 0; i < n1; i++) {
+		for (int k = n1; k < n2; k++) {
+			for (int j = 0; j < varprim; j++)
+			{
+		}
+		}
+	}
+
+	if (varprim > 0)
 	{
 		/** Gå till steg 7 */
 	}
@@ -289,9 +301,9 @@ hur gör vi med negativa tal????
 	}
 
 	/** STEG 7 */
-	r = r - 1;
-	s = sprim;
-	Define new rxs matrix and new s vector
+	// r = r - 1;
+	// s = sprim;
+	// Define new rxs matrix and new s vector
 		/** Gå till steg 2 */
 
 		return 0;
