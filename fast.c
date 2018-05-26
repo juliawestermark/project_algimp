@@ -149,31 +149,32 @@ bool eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q
 
 	n1 = 0;
 	n2 = 0;
-	
+
 	/** STEG 2 */
 	for (int i = 0; i < ineq; i++)
 	{
-		rat ttemp[var+1];
+		rat rowTemp[var+1];
 		for(int j = 0 ; j < var ; j++) {
-			ttemp[j] = t[i][j];
+			rowTemp[j] = t[i][j];
+
 		}
 		ttemp[var] = q[i];
-		
-		if (t[j][var].p > 0)
+
+		if (t[i][var-1].p > 0)
 		{
 			/** Pusha till början av lista */
-			add(pos,ttemp)
+			add(pos,rowTemp)
 			n1++;
 			n2++;
 		}
-		else if (t[i][var] < 0)
+		else if (t[i][var-1] < 0)
 		{
-			add(neg,ttmep)
+			add(neg,rowTemp)
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
-			add(zeros, ttemp)
+			add(zeros,rowTemp)
 		{
 			/** Lägg till sistsist */
 		}
@@ -186,7 +187,7 @@ bool eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q
 		{
 			t[i][j] = divq(t[i][j],t[i][var-1]);
 		}
-		q[i] = divq(t[i]/t[i][var-1]);
+		q[i] = divq(q[i]/t[i][var-1]);
 	}
 
 // #if 0
@@ -249,7 +250,7 @@ bool eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q
 	b[r] <= B[r]
 	Add eq from step 2
 	sprim = s - n2 + n1 * (n2 - n1);
-	#endif 
+	#endif
 
 	int ineqprim = ineq - n2 + n1* (n2-n1);
 	int varprim = var -1;
@@ -343,9 +344,9 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	ineq = rows;
 
 	/** STEG 1 */
-	for (int i = 0; i < rows; i++)
+	for (int i = 0; i < ineq; i++)
 	{
-		for (int j = 0; j < cols; j++)
+		for (int j = 0; j < var; j++)
 		{
 			rat ttemp;
 			rat qtemp;
