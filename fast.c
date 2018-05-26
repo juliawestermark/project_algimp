@@ -142,43 +142,9 @@ rat divq(rat x, rat y)
 	return z;
 }
 
-bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
-{
-	int var; /** variables, r */
-	int ineq; /** inequalities, s */
+bool eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q[rows]) {
 
-	int n1;
-	int n2;
-
-	list_t pos;
-	list_t neg;
-	list_t zero;
-
-	rat t[rows][cols];
-	rat q[cols];
-
-	var = cols;
-	ineq = rows;
-
-	/** STEG 1 */
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < cols; j++)
-		{
-			rat ttemp;
-			rat qtemp;
-			ttemp.p =(long long)a[i][j];
-			ttemp.q = 1;
-			t[i][j] = ttemp;
-		}
-		qtemp.p = (long long)c[i];
-		qtemp.q = 1;
-		q[i] = qtemp;
-	}
-
-	n1 = 0;
-	n2 = 0;
-
+	/** STEG 2 */
 	for (int i = 0; i < ineq; i++)
 	{
 		rat ttemp[var+1];
@@ -186,7 +152,7 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 			ttemp[j] = t[i][j];
 		}
 		ttemp[var] = q[i];
-		/** STEG 2 */
+		
 		if (t[j][var].p > 0)
 		{
 			/** Pusha till början av lista */
@@ -277,17 +243,17 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	b[r] <= B[r]
 	Add eq from step 2
 	sprim = s - n2 + n1 * (n2 - n1);
-	#endif
+	#endif 
 
 	int ineqprim = ineq - n2 + n1* (n2-n1);
 	int varprim = var -1;
 
 
 
-// ttemp[n1*(n2-n1)][var]
-// int count = 0 ;
-// while (pos != NULL){}
-//
+// 	ttemp[n1*(n2-n1)][var]
+// 	int count = 0 ;
+// 	while (pos != NULL){}
+
 // 	for(int j=0; j < var; j++){
 // 		ttemp[count][j] = pos.data[j];
 // 	}
@@ -295,7 +261,7 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 // 	count++;
 // 	}
 // while (neg != NULL) {
-//
+
 // 	for(int j=0; j < var; j++){
 // 	ttemp[count][j] = neg.data[j];
 // 	}
@@ -352,6 +318,47 @@ while (zeros != NULL) {
 	ineq = ineqprim;
 	// Define new rxs matrix and new s vector
 		/** Gå till steg 2 */
+	return eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q[rows]);
+}
 
-		return 0;
+bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
+{
+	int var; /** variables, r */
+	int ineq; /** inequalities, s */
+
+	int n1;
+	int n2;
+
+	list_t pos;
+	list_t neg;
+	list_t zero;
+
+	rat t[rows][cols];
+	rat q[cols];
+
+	var = cols;
+	ineq = rows;
+
+	/** STEG 1 */
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			rat ttemp;
+			rat qtemp;
+			ttemp.p =(long long)a[i][j];
+			ttemp.q = 1;
+			t[i][j] = ttemp;
+		}
+		qtemp.p = (long long)c[i];
+		qtemp.q = 1;
+		q[i] = qtemp;
+	}
+
+	n1 = 0;
+	n2 = 0;
+
+
+
+	return eliminate()
 }
