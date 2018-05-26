@@ -144,6 +144,12 @@ rat divq(rat x, rat y)
 
 bool eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q[rows]) {
 
+	int n1;
+	int n2;
+
+	n1 = 0;
+	n2 = 0;
+	
 	/** STEG 2 */
 	for (int i = 0; i < ineq; i++)
 	{
@@ -326,9 +332,6 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	int var; /** variables, r */
 	int ineq; /** inequalities, s */
 
-	int n1;
-	int n2;
-
 	list_t pos;
 	list_t neg;
 	list_t zero;
@@ -355,10 +358,7 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 		q[i] = qtemp;
 	}
 
-	n1 = 0;
-	n2 = 0;
 
 
-
-	return eliminate()
+	return eliminate(size_t ineq, size_t var, signed char t[rows][cols], signed char q[rows])
 }
