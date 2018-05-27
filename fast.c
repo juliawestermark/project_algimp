@@ -11,7 +11,6 @@ typedef struct rational
 } rat;
 
 typedef struct list_t list_t;
-
 struct list_t
 {
 	list_t *next;
@@ -146,9 +145,9 @@ rat divq(rat x, rat y)
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
-	list_t pos;
-	list_t neg;
-	list_t zeros;
+	list_t *pos = new_list(NULL);
+	list_t *neg = new_list(NULL);
+	list_t *zero = new_list(NULL);
 
 	size_t n1;
 	size_t n2;
@@ -168,18 +167,19 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (t[i][var-1].p > 0)
 		{
 			/** Pusha till början av lista */
-			add(pos,rowTemp)
+			add(pos,rowTemp);
 			n1++;
 			n2++;
 		}
 		else if (t[i][var-1].p < 0)
 		{
-			add(neg, rowTemp)
+			add(neg, rowTemp);
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
-			add(zeros, rowTemp)
+		{
+			add(zero, rowTemp);
 			/** Lägg till sistsist */
 		}
 	}
@@ -197,7 +197,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		{
 			tNew[i][j] = divq(t[i][j],t[i][var-1]);
 		}
-		qNew[i] = divq(q[i]/t[i][var-1]);
+		qNew[i] = divq(q[i],t[i][var-1]);
 	}
 
 	// #if 0
@@ -229,8 +229,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (n2 > n1)
 		{
 			// b[r] = max;
-			for (size_t 0 = 1; i < n1; i++) {
-				if (qNew[i] < B || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
+			for (size_t i = 1; i < n1; i++) { /** */
+				if (subq(qNew[i],B).p < 0 || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
 					B = q[i];
 			}
 
@@ -244,7 +244,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		{
 			// B[r] = min;
 			for (size_t i = n1+1; i < n2; i++) {
-				if (qNew[i] > b || i == n1+1)
+				if (subq(qNew[i],b).p > 0 || i == n1+1)
 					b = q[i];
 			}
 		}
@@ -255,12 +255,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		if (ineqPrim > n2) {
 			for (size_t i = n2 + 1; i < ineq; i++) {
-				if (qNew[i] < 0)
+				if (qNew[i].p < 0)
 					return 0;
 			}
 		}
 
-		if (B < b) {
+		if (subq(B,b) < 0) {
 			return 0;
 		} else {
 			return 1;
@@ -313,19 +313,19 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	list_t negstart = neg;
 	for (size_t i = 0 ; i < n1 ; i++) {
-		list_t postemp = pos;
-		list_t negcount = negstart;
+		list_t *postemp = pos;
+		list_t *negcount = negstart;
 		for (size_t k = n1; k < n2 ; k++){
 			// negtemp = neg;
 
-			for (size_t j = 0; j < varprim; j++) {
+			for (size_t j = 0; j < varPrim; j++) {
 				postemp = pos;
-				negtemp = neg;
+				list_t *negtemp = neg;
 				ttemp[i*n2+k-n1][j] = subq(t[i][j],t[k][j]);
 				ttemp[i*n2+k-n1][j] = subq(postemp.data,negcount.data);
 				pos = pos->next;
 				negcount= negcount->next;
-				if (i == n1-1) måsvinge
+				if (i == n1-1)
 					neg = NULL;
 
 			}
@@ -345,7 +345,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		count++;
 	}
 
-	if (varprim > 0)
+	if (varPrim > 0)
 	{
 		/** Gå till steg 7 */
 	}
@@ -355,8 +355,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	}
 
 	/** STEG 7 */
-	var = varprim;
-	ineq = ineqprim;
+	var = varPrim;
+	ineq = ineqPrim;
 	// Define new rxs matrix and new s vector
 		/** Gå till steg 2 */
 	return eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]);
