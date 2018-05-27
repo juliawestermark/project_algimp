@@ -226,11 +226,12 @@ void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 }
 
 
-void step73(rat* newT, rat* newQ, list_t* pos, list_t* neg, size_t var, int count){
-	step71(rat* newT, rat* newQ, list_t* pos, list_t* neg, size_t var, int count);
-	step73(rat* newT, rat* newQ, list_t* pos->next, list_t* neg, size_t var, int count);
-
+void step73(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
+	step71(ineq, var, newT, newQ, pos, neg, count);
+	step73(ineq, var, newT, newQ, pos->next, neg, count);
 }
+
+
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 
 	list_t *pos = new_list(NULL);
