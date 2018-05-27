@@ -1,7 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
-
-static list_t *freeList;
+#include <assert.h>
 
 /** typedef struct rational rat; */
 
@@ -11,16 +10,18 @@ typedef struct rational
 	long long q;
 } rat;
 
-/** typedef struct list_t list_t; */
+typedef struct list_t list_t;
 
-typedef struct list_t
+struct list_t
 {
 	list_t *next;
 	list_t *prev;
 	void *data;
-} list_t;
+};
 
-list_t *newList(void *data)
+static list_t *freeList;
+
+list_t *new_list(void *data)
 {
 	list_t *list;
 
@@ -143,19 +144,23 @@ rat divq(rat x, rat y)
 	return z;
 }
 
-bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
+bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
-	int n1;
-	int n2;
+	list_t pos;
+	list_t neg;
+	list_t zeros;
+
+	size_t n1;
+	size_t n2;
 
 	n1 = 0;
 	n2 = 0;
 
 	/** STEG 2 */
-	for (int i = 0; i < ineq; i++)
+	for (size_t i = 0; i < ineq; i++)
 	{
 		rat rowTemp[var+1];
-		for(int j = 0 ; j < var ; j++) {
+		for(size_t j = 0 ; j < var ; j++) {
 			rowTemp[j] = t[i][j];
 		}
 		rowTemp[var] = q[i];
@@ -167,7 +172,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 			n1++;
 			n2++;
 		}
-		else if (t[i][var-1] < 0)
+		else if (t[i][var-1].p < 0)
 		{
 			add(neg, rowTemp)
 			/** Pusha till slutet av lista */
@@ -180,15 +185,15 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	}
 	/** STEG 3 */
 
-	int ineqPrim = ineq - n2 + n1* (n2-n1);
-	int varPrim = var -1;
+	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
+	size_t varPrim = var -1;
 	
 	rat tNew[ineqPrim][varPrim];
 	rat qNew[ineqPrim];
 
-	for (int i = 0 ; i < n2 ; i++)
+	for (size_t i = 0 ; i < n2 ; i++)
 	{
-		for(int j = 0 ; j < var ; j++)
+		for(size_t j = 0 ; j < var ; j++)
 		{
 			tNew[i][j] = divq(t[i][j],t[i][var-1]);
 		}
@@ -199,9 +204,9 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	// hur gör vi med negativa tal????
 	// #endif
 
-	// for (int i = 1; i < r - 1)
+	// for (size_t i = 1; i < r - 1)
 	// {
-	// 	for (int j = 1; j < n2)
+	// 	for (size_t j = 1; j < n2)
 	// 	{
 	// 		t[i][j] = t[i][j] / t[r][j];
 	// 		q[j] = q[j] / t[r][j];
@@ -224,7 +229,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		if (n2 > n1)
 		{
 			// b[r] = max;
-			for (int 0 = 1; i < n1; i++) {
+			for (size_t 0 = 1; i < n1; i++) {
 				if (qNew[i] < B || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
 					B = q[i];
 			}
@@ -238,7 +243,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		if (n1 > 0)
 		{
 			// B[r] = min;
-			for (int i = n1+1; i < n2; i++) {
+			for (size_t i = n1+1; i < n2; i++) {
 				if (qNew[i] > b || i == n1+1)
 					b = q[i];
 			}
@@ -249,7 +254,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		}
 
 		if (ineqPrim > n2) {
-			for (int i = n2 + 1; i < ineq; i++) {
+			for (size_t i = n2 + 1; i < ineq; i++) {
 				if (qNew[i] < 0)
 					return 0;
 			}
@@ -262,7 +267,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		}
 
 
-		// for (int i = n2 + 1; i <= ineq; i++)
+		// for (size_t i = n2 + 1; i <= ineq; i++)
 		// {
 		// 	if (b[1] > B[1])
 		// 	{
@@ -291,7 +296,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	// 	int count = 0 ;
 	// 	while (pos != NULL){}
 
-	// 	for(int j=0; j < var; j++){
+	// 	for(size_t j=0; j < var; j++){
 	// 		ttemp[count][j] = pos.data[j];
 	// 	}
 	// 	pos = pos->next;
@@ -299,21 +304,21 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	// 	}
 	// while (neg != NULL) {
 
-	// 	for(int j=0; j < var; j++){
+	// 	for(size_t j=0; j < var; j++){
 	// 	ttemp[count][j] = neg.data[j];
 	// 	}
 	// 	neg = neg->next;
 	// 	count++;
 	// }
 
-	negstart = neg;
-	for (int i = 0 ; i < n1 ; i++) {
-		postemp = pos;
-		negcount = negstart;
-		for (int k = n1; k < n2 ; k++){
+	list_t negstart = neg;
+	for (size_t i = 0 ; i < n1 ; i++) {
+		list_t postemp = pos;
+		list_t negcount = negstart;
+		for (size_t k = n1; k < n2 ; k++){
 			// negtemp = neg;
 
-			for (int j = 0; j < varprim; j++) {
+			for (size_t j = 0; j < varprim; j++) {
 				postemp = pos;
 				negtemp = neg;
 				ttemp[i*n2+k-n1][j] = subq(t[i][j],t[k][j]);
@@ -332,7 +337,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 
 	int count = 0 ;
 	while (zeros != NULL) {
-		for (int j = 0 ; j < n-n2; j++){
+		for (size_t j = 0 ; j < n-n2; j++){
 			ttemp[n1*(n2-n1)+count][j] = zeros.data[j];
 		}
 		qtemp[n1*(n2-n1)+count] = zeros.data[var];
@@ -359,12 +364,8 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
 {
-	int var; /** variables, r */
-	int ineq; /** inequalities, s */
-
-	list_t pos;
-	list_t neg;
-	list_t zero;
+	size_t var; /** variables, r */
+	size_t ineq; /** inequalities, s */
 
 	rat t[rows][cols];
 	rat q[rows];
@@ -373,9 +374,9 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	ineq = rows;
 
 	/** STEG 1 */
-	for (int i = 0; i < ineq; i++)
+	for (size_t i = 0; i < ineq; i++)
 	{
-		for (int j = 0; j < var; j++)
+		for (size_t j = 0; j < var; j++)
 		{
 			rat ttemp;
 			rat qtemp;
