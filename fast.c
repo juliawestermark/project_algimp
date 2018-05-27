@@ -210,47 +210,49 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	// }
 
 	/** STEG 4 */
-	if (n2 > n1)
-	{
-		b[r] = max;
-	}
-	else
-	{
-		b[r] = -inf
-	}
+	/** & STEG 5 */
 
-	if (n1 > 0)
-	{
-		B[r] = min;
-	}
-	else
-	{
-		B[r] = inf
-	}
-
-	/** STEG 5 */
-
-	if (r > 1)
+	if (var > 1) /** ELLER varprim? */
 	{
 		/** Gå till steg 6 */
 	}
 	else
-	{ /** r=1 */
+	{ /** var==1 eller varprim ==1?*/
+		rat B; /* = qNew[0]; 	/** Om B inte finns? */
+		rat b; /* = qNew[n1+1]; /** Om b inte finns? */
 
-		rat B = q[0]; 	/** Om B inte finns? */
-		rat b = q[n1+1]; /** Om b inte finns? */
+		if (n2 > n1)
+		{
+			// b[r] = max;
+			for (int 0 = 1; i < n1; i++) {
+				if (qNew[i] < B || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
+					B = q[i];
+			}
 
-		for (int i = 1; i < n1; i++) {
-			if (q[i] < B)
-				B = q[i];
 		}
-		for (int i = n1+2; i < n2; i++) {
-			if (q[i] > b)
-				b = q[i];
+		else
+		{
+			b[r] = -inf
 		}
-		for (int i = n2 + 1; i < ineq; i++) {
-			if (q[i] < 0)
-				return 0;
+
+		if (n1 > 0)
+		{
+			// B[r] = min;
+			for (int i = n1+1; i < n2; i++) {
+				if (qNew[i] > b || i == n1+1)
+					b = q[i];
+			}
+		}
+		else
+		{
+			B[r] = inf
+		}
+
+		if (ineqPrim > n2) {
+			for (int i = n2 + 1; i < ineq; i++) {
+				if (qNew[i] < 0)
+					return 0;
+			}
 		}
 
 		if (B < b) {
@@ -285,9 +287,6 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	sprim = s - n2 + n1 * (n2 - n1);
 	#endif
 
-
-
-
 	// 	ttemp[n1*(n2-n1)][var]
 	// 	int count = 0 ;
 	// 	while (pos != NULL){}
@@ -307,15 +306,12 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 	// 	count++;
 	// }
 
-
-
-
 	negstart = neg;
 	for (int i = 0 ; i < n1 ; i++) {
 		postemp = pos;
 		negcount = negstart;
 		for (int k = n1; k < n2 ; k++){
-			negtemp = neg;
+			// negtemp = neg;
 
 			for (int j = 0; j < varprim; j++) {
 				postemp = pos;
@@ -333,6 +329,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		}
 
 	}
+
 	int count = 0 ;
 	while (zeros != NULL) {
 		for (int j = 0 ; j < n-n2; j++){
@@ -342,22 +339,23 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		zeros = zeros->next;
 		count++;
 	}
-		if (varprim > 0)
-		{
-			/** Gå till steg 7 */
-		}
-		else
-		{
-			return 1;
-		}
 
-		/** STEG 7 */
-		var = var - 1;
-		ineq = ineqprim;
-		// Define new rxs matrix and new s vector
-			/** Gå till steg 2 */
-		return eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]);
+	if (varprim > 0)
+	{
+		/** Gå till steg 7 */
 	}
+	else
+	{
+		return 1; /** Vad betyder detta? */
+	}
+
+	/** STEG 7 */
+	var = varprim;
+	ineq = ineqprim;
+	// Define new rxs matrix and new s vector
+		/** Gå till steg 2 */
+	return eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]);
+}
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
 {
@@ -389,8 +387,6 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 		qtemp.q = 1;
 		q[i] = qtemp;
 	}
-
-
 
 	return eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows])
 }
