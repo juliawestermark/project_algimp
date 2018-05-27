@@ -192,6 +192,30 @@ boolean step46(list){
 		return step46(list->next);
 	}
 }
+void step71(pos, neg){
+	for(int j = 0; j < varPrim; j++){
+		newT[count][j] = subq(pos->data[j], neg->data[j]);
+	}
+	newQ[count] = subq(pos->data[varPrim], neg->data[varPrim]);
+	count++;
+	if (neg->next != NULL){
+		step7(pos, neg->next);
+	}
+	if(pos->next != NULL) {
+		step7(pos->next, neg)
+	}
+	return;
+}
+void step72(zero){
+	for (int j = 0; j < varPrim; j++){
+		newT[count][j] = zero->data[j];
+	}
+	newQ[count] = zero->data[varPrim];
+	count++;
+	step72(zero->next)
+	count = 0;
+	return;
+}
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
@@ -301,44 +325,44 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 				}
 			}
 
-
-			// b[r] = max;
-			for (size_t i = 1; i < n1; i++) { /** */
-				if (subq(qNew[i],B).p < 0 || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
-					B = q[i];
-			}
-
-		}
-		else
-		{
-			b[r] = -inf
-		}
-
-		if (n1 > 0)
-		{
-			// B[r] = min;
-			for (size_t i = n1+1; i < n2; i++) {
-				if (subq(qNew[i],b).p > 0 || i == n1+1)
-					b = q[i];
-			}
-		}
-		else
-		{
-			B[r] = inf
-		}
-
-		if (ineq > n2) {
-			for (size_t i = n2 + 1; i < ineq; i++) {
-				if (qNew[i].p < 0)
-					return 0;
-			}
-		}
-
-		if (subq(B,b) < 0) {
-			return 0;
-		} else {
-			return 1;
-		}
+		//
+		// 	// b[r] = max;
+		// 	for (size_t i = 1; i < n1; i++) { /** */
+		// 		if (subq(qNew[i],B).p < 0 || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
+		// 			B = q[i];
+		// 	}
+		//
+		// }
+		// else
+		// {
+		// 	b[r] = -inf
+		// }
+		//
+		// if (n1 > 0)
+		// {
+		// 	// B[r] = min;
+		// 	for (size_t i = n1+1; i < n2; i++) {
+		// 		if (subq(qNew[i],b).p > 0 || i == n1+1)
+		// 			b = q[i];
+		// 	}
+		// }
+		// else
+		// {
+		// 	B[r] = inf
+		// }
+		//
+		// if (ineq > n2) {
+		// 	for (size_t i = n2 + 1; i < ineq; i++) {
+		// 		if (qNew[i].p < 0)
+		// 			return 0;
+		// 	}
+		// }
+		//
+		// if (subq(B,b) < 0) {
+		// 	return 0;
+		// } else {
+		// 	return 1;
+		// }
 
 
 		// for (size_t i = n2 + 1; i <= ineq; i++)
@@ -385,55 +409,76 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	// 	count++;
 	// }
 
-	list_t negstart = neg;
-	for (size_t i = 0 ; i < n1 ; i++) {
-		list_t *postemp = pos;
-		list_t *negcount = negstart;
-		for (size_t k = n1; k < n2 ; k++){
-			// negtemp = neg;
 
-			for (size_t j = 0; j < varPrim; j++) {
-				postemp = pos;
-				list_t *negtemp = neg;
-				ttemp[i*n2+k-n1][j] = subq(t[i][j],t[k][j]);
-				ttemp[i*n2+k-n1][j] = subq(postemp.data,negcount.data);
-				pos = pos->next;
-				negcount= negcount->next;
-				if (i == n1-1)
-					neg = NULL;
 
-			}
-			qtemp[i*n2+k-n1]= subq(q[i],q[k]);
-			qtemp[i*n2+k-n1]= subq(postemp.data,negcount.data);
-		}
 
-	}
 
+
+
+	rat newT[ineqPrim][varPrim];
+	rat newQ[ineqPrim];
 	int count = 0 ;
-	while (zeros != NULL) {
-		for (size_t j = 0 ; j < n-n2; j++){
-			ttemp[n1*(n2-n1)+count][j] = zeros.data[j];
-		}
-		qtemp[n1*(n2-n1)+count] = zeros.data[var];
-		zeros = zeros->next;
-		count++;
-	}
+	step71(pos, neg);
+	step72(zero);
+	return eliminate(ineqPrim, varPrim, newT, newQ);
 
-	if (varPrim > 0)
-	{
-		/** Gå till steg 7 */
-	}
-	else
-	{
-		return 1; /** Vad betyder detta? */
-	}
+
+
+
+
+
+
+
+	//
+	// list_t negstart = neg;
+	// for (size_t i = 0 ; i < n1 ; i++) {
+	// 	list_t *postemp = pos;
+	// 	list_t *negcount = negstart;
+	// 	for (size_t k = n1; k < n2 ; k++){
+	// 		// negtemp = neg;
+	//
+	// 		for (size_t j = 0; j < varPrim; j++) {
+	// 			postemp = pos;
+	// 			list_t *negtemp = neg;
+	// 			ttemp[i*n2+k-n1][j] = subq(t[i][j],t[k][j]);
+	// 			ttemp[i*n2+k-n1][j] = subq(postemp.data,negcount.data);
+	// 			pos = pos->next;
+	// 			negcount= negcount->next;
+	// 			if (i == n1-1)
+	// 				neg = NULL;
+	//
+	// 		}
+	// 		qtemp[i*n2+k-n1]= subq(q[i],q[k]);
+	// 		qtemp[i*n2+k-n1]= subq(postemp.data,negcount.data);
+	// 	}
+	//
+	// }
+	//
+	// int count = 0 ;
+	// while (zeros != NULL) {
+	// 	for (size_t j = 0 ; j < n-n2; j++){
+	// 		ttemp[n1*(n2-n1)+count][j] = zeros.data[j];
+	// 	}
+	// 	qtemp[n1*(n2-n1)+count] = zeros.data[var];
+	// 	zeros = zeros->next;
+	// 	count++;
+	// }
+	//
+	// if (varPrim > 0)
+	// {
+	// 	/** Gå till steg 7 */
+	// }
+	// else
+	// {
+	// 	return 1; /** Vad betyder detta? */
+	// }
 
 	/** STEG 7 */
-	var = varPrim;
-	ineq = ineqPrim;
+	// var = varPrim;
+	// ineq = ineqPrim;
 	// Define new rxs matrix and new s vector
 		/** Gå till steg 2 */
-	return eliminate(ineq, var, t, q);
+
 }
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
