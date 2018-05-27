@@ -195,29 +195,27 @@ bool step46(list_t* list)
 		return step46(list->next);
 	}
 }
-void step71(pos, neg){
-	for(int j = 0; j < varPrim; j++){
+void step71(rat* newT, rat* newQ, list_t* pos, list_t* neg, size_t var, int count){
+	for(size_t j = 0; j < var; j++){
 		newT[count][j] = subq(pos->data[j], neg->data[j]);
 	}
-	newQ[count] = subq(pos->data[varPrim], neg->data[varPrim]);
+	newQ[count] = subq(pos->data[var], neg->data[var]);
 	count++;
 	if (neg->next != NULL){
 		step7(pos, neg->next);
 	}
 	if(pos->next != NULL) {
-		step7(pos->next, neg)
+		step7(pos->next, neg);
 	}
-	return;
 }
-void step72(zero){
-	for (int j = 0; j < varPrim; j++){
+void step72(rat* newT, rat* newQ, list_t* zero, size_t var, int count){
+	for (size_t j = 0; j < var; j++){
 		newT[count][j] = zero->data[j];
 	}
-	newQ[count] = zero->data[varPrim];
+	newQ[count] = zero->data[var];
 	count++;
-	step72(zero->next)
+	step72(rat* newT, rat* newQ, list_t* zero->next, size_t var, int count);
 	count = 0;
-	return;
 }
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
@@ -419,9 +417,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	rat newT[ineqPrim][varPrim];
 	rat newQ[ineqPrim];
-	int count = 0 ;
-	step71(pos, neg);
-	step72(zero);
+	int count = 0;
+	step71(&newT, &newQ, pos, neg, var, count);
+	step72(&newT, &newQ, zero, var, count);
 	return eliminate(ineqPrim, varPrim, newT, newQ);
 
 
