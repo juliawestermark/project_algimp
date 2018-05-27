@@ -157,16 +157,9 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		rat rowTemp[var+1];
 		for(int j = 0 ; j < var ; j++) {
 			rowTemp[j] = t[i][j];
-<<<<<<< HEAD
-
-		}
-		ttemp[var] = q[i];
-
-=======
 		}
 		rowTemp[var] = q[i];
 		
->>>>>>> 38cc01e6d3acc16aece5ea46f1e4d121a974b406
 		if (t[i][var-1].p > 0)
 		{
 			/** Pusha till början av lista */
@@ -176,21 +169,12 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		}
 		else if (t[i][var-1] < 0)
 		{
-<<<<<<< HEAD
-			add(neg,rowTemp)
-=======
 			add(neg, rowTemp)
->>>>>>> 38cc01e6d3acc16aece5ea46f1e4d121a974b406
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
-<<<<<<< HEAD
-			add(zeros,rowTemp)
-		{
-=======
 			add(zeros, rowTemp)
->>>>>>> 38cc01e6d3acc16aece5ea46f1e4d121a974b406
 			/** Lägg till sistsist */
 		}
 	}
@@ -208,11 +192,7 @@ bool eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]) {
 		{
 			tNew[i][j] = divq(t[i][j],t[i][var-1]);
 		}
-<<<<<<< HEAD
-		q[i] = divq(q[i]/t[i][var-1]);
-=======
 		qNew[i] = divq(q[i]/t[i][var-1]);
->>>>>>> 38cc01e6d3acc16aece5ea46f1e4d121a974b406
 	}
 
 	// #if 0
