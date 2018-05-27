@@ -192,7 +192,7 @@ bool step46(list_t* list, size_t var)
 		return 0;
 	}
 	else{
-		return step46(list->next);
+		return step46(list->next, var);
 	}
 }
 
@@ -337,7 +337,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 				return 0;
 			}
 			if (ineq > n2) {
-				return step46(zero);
+				return step46(zero, var);
 			}
 
 			return 1;
