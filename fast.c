@@ -228,7 +228,9 @@ void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 
 void step73(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
 	step71(ineq, var, newT, newQ, pos, neg, count);
-	step73(ineq, var, newT, newQ, pos->next, neg, count);
+	if(pos->next != NULL) {
+		step73(ineq, var, newT, newQ, pos->next, neg, count);
+	}
 }
 
 
