@@ -195,6 +195,7 @@ bool step46(list_t* list)
 		return step46(list->next);
 	}
 }
+
 void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
 	for(size_t j = 0; j < var; j++){
 		newT[count][j] = subq(pos->data[j], neg->data[j]);
@@ -209,6 +210,7 @@ void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 		step71(ineq, var, newT, newQ, pos->next, neg, count);
 	}
 }
+
 void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* zero, int count)
 {
 	for (size_t j = 0; j < var; j++){
