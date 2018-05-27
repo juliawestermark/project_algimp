@@ -143,6 +143,21 @@ rat divq(rat x, rat y)
 	return z;
 }
 
+void step3(list_t* list, size_t var) {
+	if (list->data==NULL) {
+		return;
+	}
+	size_t length = var;
+	else {
+		for(size_t j=0; j < var; j++){
+			// void *data = list->data;
+			list->data[j] = divq((list->data[j]),(list->data[var-1]));
+		}
+		list->data[var] = divq(list->data[var],list->data[var-1]);
+	}
+	step3(list->next, var);
+}
+
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	list_t *pos = new_list(NULL);
@@ -167,19 +182,22 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (t[i][var-1].p > 0)
 		{
 			/** Pusha till början av lista */
-			add(pos,rowTemp);
+			// add(pos,rowTemp);
+			add(pos,&t[i][0]);
 			n1++;
 			n2++;
 		}
 		else if (t[i][var-1].p < 0)
 		{
-			add(neg, rowTemp);
+			// add(neg, rowTemp);
+			add(pos,&t[i][0]);
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
 		{
-			add(zero, rowTemp);
+			// add(zero, rowTemp);
+			add(pos,&t[i][0]);
 			/** Lägg till sistsist */
 		}
 	}
@@ -192,21 +210,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	// rat qNew[ineqPrim];
 	//
 
-step3(pos);
-step3(neg);
-
-void step3(list_t* list)
-	if (list->data==NULL){
-		return;
-	}
-	else {
-		for(int j=0; j < var; j++){
-			list->data[j] = divq(list->data[j],list->data[var-1]);
-		}
-		list->data[var] = divq(list->data)[var],list->data[var-1];
-	}
-	step3(list->next);
-}
+	step3(pos, var);
+	step3(neg, var);
+	
 	//
 	// for (size_t i = 0 ; i < n2 ; i++)
 	// {
@@ -270,7 +276,7 @@ void step3(list_t* list)
 			B[r] = inf
 		}
 
-		if (ineqPrim > n2) {
+		if (ineq > n2) {
 			for (size_t i = n2 + 1; i < ineq; i++) {
 				if (qNew[i].p < 0)
 					return 0;
@@ -376,7 +382,7 @@ void step3(list_t* list)
 	ineq = ineqPrim;
 	// Define new rxs matrix and new s vector
 		/** Gå till steg 2 */
-	return eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows]);
+	return eliminate(ineq, var, t, q);
 }
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
@@ -406,5 +412,5 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 		q[i] = qtemp;
 	}
 
-	return eliminate(size_t ineq, size_t var, rat t[rows][cols], rat q[rows])
+	return eliminate(ineq, var, t, q);
 }
