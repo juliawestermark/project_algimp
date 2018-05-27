@@ -183,12 +183,12 @@ rat step45(rat b, list_t* list, size_t var)
 	}
 }
 
-bool step46(list_t* list)
+bool step46(list_t* list, size_t var)
 {
 	if (list->data == NULL){
 		return 1;
 	}
-	if (list->data < 0){
+	if (list->data[var].p < 0){
 		return 0;
 	}
 	else{
