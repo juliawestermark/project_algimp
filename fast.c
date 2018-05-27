@@ -163,7 +163,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 			rowTemp[j] = t[i][j];
 		}
 		rowTemp[var] = q[i];
-		
+
 		if (t[i][var-1].p > 0)
 		{
 			/** Pusha till början av lista */
@@ -187,18 +187,35 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
 	size_t varPrim = var -1;
-	
-	rat tNew[ineqPrim][varPrim];
-	rat qNew[ineqPrim];
 
-	for (size_t i = 0 ; i < n2 ; i++)
-	{
-		for(size_t j = 0 ; j < var ; j++)
-		{
-			tNew[i][j] = divq(t[i][j],t[i][var-1]);
-		}
-		qNew[i] = divq(q[i],t[i][var-1]);
+	// rat tNew[ineqPrim][varPrim];
+	// rat qNew[ineqPrim];
+	//
+
+step3(pos);
+step3(neg);
+
+void step3(list_t* list)
+	if (list->data==NULL){
+		return;
 	}
+	else {
+		for(int j=0; j < var; j++){
+			list->data[j] = divq(list->data[j],list->data[var-1]);
+		}
+		list->data[var] = divq(list->data)[var],list->data[var-1];
+	}
+	step3(list->next);
+}
+	//
+	// for (size_t i = 0 ; i < n2 ; i++)
+	// {
+	// 	for(size_t j = 0 ; j < var ; j++)
+	// 	{
+	// 		tNew[i][j] = divq(t[i][j],t[i][var-1]);
+	// 	}
+	// 	qNew[i] = divq(q[i],t[i][var-1]);
+	// }
 
 	// #if 0
 	// hur gör vi med negativa tal????
@@ -217,7 +234,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	/** STEG 4 */
 	/** & STEG 5 */
 
-	if (var > 1) /** ELLER varprim? */
+	if (var > 1) /** ELLER varPrim? */
 	{
 		/** Gå till steg 6 */
 	}
