@@ -15,12 +15,12 @@ struct list_t
 {
 	list_t *next;
 	list_t *prev;
-	void *data;
+	rat *data;
 };
 
 static list_t *freeList;
 
-list_t *new_list(void *data)
+list_t *new_list(rat *data)
 {
 	list_t *list;
 
@@ -42,7 +42,7 @@ list_t *new_list(void *data)
 }
 
 /** Circular list */
-void add(list_t *list, void *data)
+void add(list_t *list, rat *data)
 {
 	list_t *link;
 	list_t *temp;
@@ -143,46 +143,49 @@ rat divq(rat x, rat y)
 	return z;
 }
 
-void step3(list_t* list, size_t var) {
+void step3(list_t* list, size_t var)
+{
 	if (list->data==NULL) {
 		return;
 	}
-	size_t length = var;
 	else {
 		for(size_t j=0; j < var; j++){
-			// void *data = list->data;
-			list->data[j] = divq((list->data[j]),(list->data[var-1]));
+			list->data[j] = divq((list->data)[j],list->data[var-1]);
 		}
 		list->data[var] = divq(list->data[var],list->data[var-1]);
 	}
 	step3(list->next, var);
 }
 
-rat step44(rat B, list){
+rat step44(rat B, list_t* list, size_t var)
+{
 	if (list->data == NULL){
-	return B;
-}
+		return B;
+	}
 	else{
-		if(subq(list->data[var],B).p<0){
-			B = list->data;
+		if (subq(list->data[var],B).p<0) {
+			B = list->data[var];
 		}
-		return step45(B, list->next);
+		return step44(B, list->next, var);
 	}
 }
 
-rat step45(rat b, list){
+rat step45(rat b, list_t* list, size_t var)
+{
 	if (list->data == NULL){
-	return b;
-}
+		return b;
+	}
 	else{
-		if(subq(list->data[var],b).p>0){
-			b = list->data;
+		if (subq(list->data[var],b).p>0) {
+			b = list->data[var];
 		}
-		return step45(b, list->next);
+		return step45(b, list->next, var);
 	}
 }
-boolean step46(list){
-	if (list->data== NULL){
+
+bool step46(list_t* list)
+{
+	if (list->data == NULL){
 		return 1;
 	}
 	if (list->data < 0){
@@ -208,11 +211,11 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	/** STEG 2 */
 	for (size_t i = 0; i < ineq; i++)
 	{
-		rat rowTemp[var+1];
-		for(size_t j = 0 ; j < var ; j++) {
-			rowTemp[j] = t[i][j];
-		}
-		rowTemp[var] = q[i];
+		// rat rowTemp[var+1];
+		// for(size_t j = 0 ; j < var ; j++) {
+		// 	rowTemp[j] = t[i][j];
+		// }
+		// rowTemp[var] = q[i];
 
 		if (t[i][var-1].p > 0)
 		{
@@ -284,22 +287,21 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		rat B; /* = qNew[0]; 	/** Om B inte finns? */
 		rat b; /* = qNew[n1+1]; /** Om b inte finns? */
 
-		if (n2 > n1)
-		{
-
+		if (n2 > n1) {
 			rat B;
 			rat b;
 			B.q=1;
 			b.q=1;
-			B.p = 2147483647
-			b.p = -2147483648
-			if(step44(B, pos) < step45(b, neg)){
+			B.p = 2147483647;
+			b.p = -2147483648;
+
+			if (subq(step44(B, pos, var), step45(b, neg, var)).p < 0) {
 				return 0;
-				}
-				else{
-					return step46(zero);
-				}
 			}
+			else {
+				return step46(zero);
+			}
+		}
 
 
 			// b[r] = max;
