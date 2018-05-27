@@ -158,6 +158,41 @@ void step3(list_t* list, size_t var) {
 	step3(list->next, var);
 }
 
+rat step44(rat B, list){
+	if (list->data == NULL){
+	return B;
+}
+	else{
+		if(subq(list->data[var],B).p<0){
+			B = list->data;
+		}
+		return step45(B, list->next);
+	}
+}
+
+rat step45(rat b, list){
+	if (list->data == NULL){
+	return b;
+}
+	else{
+		if(subq(list->data[var],b).p>0){
+			b = list->data;
+		}
+		return step45(b, list->next);
+	}
+}
+boolean step46(list){
+	if (list->data== NULL){
+		return 1;
+	}
+	if (list->data < 0){
+		return 0;
+	}
+	else{
+		return step46(list->next);
+	}
+}
+
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	list_t *pos = new_list(NULL);
@@ -212,7 +247,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	step3(pos, var);
 	step3(neg, var);
-	
+
 	//
 	// for (size_t i = 0 ; i < n2 ; i++)
 	// {
@@ -251,6 +286,22 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		if (n2 > n1)
 		{
+
+			rat B;
+			rat b;
+			B.q=1;
+			b.q=1;
+			B.p = 2147483647
+			b.p = -2147483648
+			if(step44(B, pos) < step45(b, neg)){
+				return 0;
+				}
+				else{
+					return step46(zero);
+				}
+			}
+
+
 			// b[r] = max;
 			for (size_t i = 1; i < n1; i++) { /** */
 				if (subq(qNew[i],B).p < 0 || i == 0) /* Eller om B == NULL ?, dvs i= 0*/
