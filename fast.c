@@ -195,30 +195,35 @@ bool step46(list_t* list)
 		return step46(list->next);
 	}
 }
-void step71(rat* newT, rat* newQ, list_t* pos, list_t* neg, size_t var, int count){
+void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
 	for(size_t j = 0; j < var; j++){
 		newT[count][j] = subq(pos->data[j], neg->data[j]);
 	}
-	newQ[count] = subq(pos->data[var], neg->data[var]);
+	// newQ[count] = subq(pos->data[var], neg->data[var]);
+	newT[count][var] = subq(pos->data[var], neg->data[var]);
 	count++;
 	if (neg->next != NULL){
-		step7(pos, neg->next);
+		step71(ineq, var, newT, newQ, pos, neg->next, count);
 	}
 	if(pos->next != NULL) {
-		step7(pos->next, neg);
+		step71(ineq, var, newT, newQ, pos->next, neg, count);
 	}
 }
-void step72(rat* newT, rat* newQ, list_t* zero, size_t var, int count){
+void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* zero, int count)
+{
 	for (size_t j = 0; j < var; j++){
 		newT[count][j] = zero->data[j];
 	}
-	newQ[count] = zero->data[var];
+	// newQ[count] = zero->data[var];
+	newT[count][var] = zero->data[var];
 	count++;
-	step72(rat* newT, rat* newQ, list_t* zero->next, size_t var, int count);
+	if(zero->next != NULL) {
+		step72(ineq, var, newT, newQ, zero->next, count);
+	}
 	count = 0;
 }
 
-bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
+bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 
 	list_t *pos = new_list(NULL);
 	list_t *neg = new_list(NULL);
@@ -306,12 +311,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	}
 	else
 	{ /** var==1 eller varprim ==1?*/
-		rat B; /* = qNew[0]; 	/** Om B inte finns? */
-		rat b; /* = qNew[n1+1]; /** Om b inte finns? */
 
 		if (n2 > n1) {
-			rat B;
-			rat b;
+
+			rat B; /* = qNew[0]; 	 Om B inte finns? */
+			rat b; /* = qNew[n1+1]; Om b inte finns? */
+
 			B.q=1;
 			b.q=1;
 			B.p = 2147483647;
@@ -320,9 +325,11 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 			if (subq(step44(B, pos, var), step45(b, neg, var)).p < 0) {
 				return 0;
 			}
-			else {
+			if (ineq > n2) {
 				return step46(zero);
 			}
+
+			return 1;
 		}
 
 		//
@@ -418,9 +425,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	rat newT[ineqPrim][varPrim];
 	rat newQ[ineqPrim];
 	int count = 0;
-	step71(&newT, &newQ, pos, neg, var, count);
-	step72(&newT, &newQ, zero, var, count);
-	return eliminate(ineqPrim, varPrim, newT, newQ);
+	step71(ineq, var, newT, newQ, pos, neg, count);
+	step72(ineq, var, newT, newQ, zero, count);
+	return eliminate(ineqPrim, varPrim, newT);
 
 
 
@@ -486,8 +493,8 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	size_t var; /** variables, r */
 	size_t ineq; /** inequalities, s */
 
-	rat t[rows][cols];
-	rat q[rows];
+	rat t[rows][cols+1];
+	// rat q[rows];
 
 	var = cols;
 	ineq = rows;
@@ -495,18 +502,22 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	/** STEG 1 */
 	for (size_t i = 0; i < ineq; i++)
 	{
+		rat qtemp;
 		for (size_t j = 0; j < var; j++)
 		{
 			rat ttemp;
-			rat qtemp;
 			ttemp.p =(long long)a[i][j];
 			ttemp.q = 1;
 			t[i][j] = ttemp;
 		}
 		qtemp.p = (long long)c[i];
 		qtemp.q = 1;
-		q[i] = qtemp;
+		t[i][var] = qtemp;
+		
+		// qtemp.p = (long long)c[i];
+		// qtemp.q = 1;
+		// q[i] = qtemp;
 	}
 
-	return eliminate(ineq, var, t, q);
+	return eliminate(ineq, var, t);
 }
