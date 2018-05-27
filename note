@@ -1,4 +1,4 @@
-InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.9) 
 
 CFLAGS = -g -Wall -Wextra -std=c11 -Wno-parentheses
 

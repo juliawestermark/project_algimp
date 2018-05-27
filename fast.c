@@ -183,16 +183,16 @@ rat step45(rat b, list_t* list, size_t var)
 	}
 }
 
-bool step46(list_t* list)
+bool step46(list_t* list, size_t var)
 {
 	if (list->data == NULL){
 		return 1;
 	}
-	if (list->data < 0){
+	if (list->data[var].p < 0){
 		return 0;
 	}
 	else{
-		return step46(list->next);
+		return step46(list->next, var);
 	}
 }
 
@@ -337,7 +337,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 				return 0;
 			}
 			if (ineq > n2) {
-				return step46(zero);
+				return step46(zero, var);
 			}
 
 			return 1;
