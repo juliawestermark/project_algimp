@@ -225,6 +225,12 @@ void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 	count = 0;
 }
 
+
+void step73(rat* newT, rat* newQ, list_t* pos, list_t* neg, size_t var, int count){
+	step71(rat* newT, rat* newQ, list_t* pos, list_t* neg, size_t var, int count);
+	step73(rat* newT, rat* newQ, list_t* pos->next, list_t* neg, size_t var, int count);
+
+}
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 
 	list_t *pos = new_list(NULL);
@@ -427,13 +433,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 	rat newT[ineqPrim][varPrim];
 	rat newQ[ineqPrim];
 	int count = 0;
-	step71(ineq, var, newT, newQ, pos, neg, count);
+	step73(ineq, var, newT, newQ, pos, neg, count);
 	step72(ineq, var, newT, newQ, zero, count);
 	return eliminate(ineqPrim, varPrim, newT);
-
-
-
-
 
 
 
@@ -515,7 +517,7 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 		qtemp.p = (long long)c[i];
 		qtemp.q = 1;
 		t[i][var] = qtemp;
-		
+
 		// qtemp.p = (long long)c[i];
 		// qtemp.q = 1;
 		// q[i] = qtemp;
