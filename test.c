@@ -38,8 +38,9 @@ int main() {
     // printf("End\n");
     
     if (fm(rows, cols, a, c)) {
-        printf("Yes!");
+        printf("Yes!\n");
     } else {
-        printf("No!");
+        printf("No!\n");
     }
+    return 0;
 }

@@ -339,11 +339,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	#if DEBUG
 	for (i = 0; i < ineq; i++) {
         for (size_t j = 0; j < var; j++) {
-            pr("%lld \t", t[i][j].p);
+            pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
         }
-        pr("<= \t %lld", q[i].p);
+        pr("<= \t %lld/%lld", q[i].p, q[i].q);
         pr("\n");
     }
+    pr("\n");
 	#endif
 
 	// /** STEG 2 */
@@ -394,22 +395,24 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	// }
 	//
 
-
-
-
-
-
-
-
-
-
-	for(size_t i; i < n2; i++) {
-		for(size_t j; j < var; j++) {
+	for(size_t i = 0; i < n2; i++) {
+		q[i] = divq(q[i],t[i][var-1]);
+		for(size_t j = 0; j < var; j++) {
 			t[i][j] = divq(t[i][j],t[i][var-1]);
 		}
-		q[i] = divq(q[i],t[i][var-1]);
 	}
 
+	#if DEBUG
+	pr("Efter steg tre\n");
+	for (i = 0; i < ineq; i++) {
+        for (size_t j = 0; j < var; j++) {
+            pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
+        }
+        pr("<= \t %lld/%lld", q[i].p, q[i].q);
+        pr("\n");
+    }
+    pr("\n");
+	#endif
 
 
 	//
@@ -480,6 +483,18 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 				b.q=1;
 				B.p = 2147483647;
 				b.p = -2147483648;
+
+				#if DEBUG
+					pr("Efter steg någonting\n");
+					for (i = 0; i < ineq; i++) {
+						for (size_t j = 0; j < var; j++) {
+							pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
+						}
+						pr("<= \t %lld/%lld", q[i].p, q[i].q);
+						pr("\n");
+					}
+					pr("\n");
+				#endif
 
 				for (size_t i = 0; i < n1; i++) {
 					if (subq(q[i],B).p < 0){
@@ -586,22 +601,22 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	int count = 0;
 
 
-for(size_t i = 0; i < n1; i++) {
-	for(size_t k = n1; k < n2; k++){
-		for(size_t j = 0; j< varPrim ; j++){
-				newT[count][j] = subq(t[i][j],t[k][j]);
+	for(size_t i = 0; i < n1; i++) {
+		for(size_t k = n1; k < n2; k++){
+			for(size_t j = 0; j< varPrim ; j++){
+					newT[count][j] = subq(t[i][j],t[k][j]);
+			}
+			newQ[count] = subq(q[i],q[k]);
+			count++;
 		}
-		newQ[count] = subq(q[i],q[k]);
+	}
+	for(size_t i = n2; i < ineq; i++) {
+		for(size_t j = 0; j< varPrim ; j++){
+				newT[count][j] = t[i][j];
+		}
+		newQ[count] = q[i];
 		count++;
 	}
-}
-for(size_t i = n2; i < ineq; i++) {
-	for(size_t j = 0; j< varPrim ; j++){
-			newT[count][j] = t[i][j];
-	}
-	newQ[count] = q[i];
-	count++;
-}
 
 
 	return eliminate(ineqPrim, varPrim, newT, newQ);
