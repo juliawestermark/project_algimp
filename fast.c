@@ -119,6 +119,15 @@ void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t row
 	swap(&q[rowOne], &q[rowTwo]);
 }
 
+bool compare(rat small, rat big) {
+	if (small.p < 0 && big.p > 0)
+		return 1;
+	else if (small.p > 0 && big.p < 0)
+		return 0;
+	else
+		return (subq(small,big).p < 0);
+}
+
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	pr("Start\n");
@@ -230,7 +239,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		for (size_t i = 0; i < n1; i++) {
 			pr("Loop 501a\n i=%zu\n", i);
-			if (i == 0 || subq(q[i],B).p < 0){
+			// if (i == 0 || subq(q[i],B).p < 0){
+			if (i == 0 || compare(q[i],B)){
 				B = q[i];
 				pr("Loop 501b\n B=%ld \n", B.p);
 			}
@@ -241,7 +251,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		for(size_t i = n1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
 			pr("Loop 509a\n b=%ld\n", b.p);
-			if (i == n1 || subq(q[i],b).p > 0){
+			// if (i == n1 || subq(q[i],b).p > 0){
+			if (i == n1 || compare(b,q[i])){
 				b = q[i];
 				pr("Loop 509b\n b=%ld \n", b.p);
 			}
@@ -254,7 +265,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 				return 0;
 		}
 
-		if (subq(B,b).p < 0) {
+		// if (subq(B,b).p < 0) {
+		if (compare(B,b)) {
 			pr("Hejdå 2\n");
 			return 0;
 		}
