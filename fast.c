@@ -19,47 +19,47 @@ typedef struct rational
 	long long q;
 } rat;
 
-typedef struct list_t list_t;
-struct list_t
-{
-	list_t *next;
-	rat *data;
-};
+// typedef struct list_t list_t;
+// struct list_t
+// {
+// 	list_t *next;
+// 	rat *data;
+// };
 
-static list_t *freeList;
+// static list_t *freeList;
 
-list_t *new_list(rat *data)
-{
-	list_t *list;
+// list_t *new_list(rat *data)
+// {
+// 	list_t *list;
 
-	if (freeList != NULL)
-	{
-		list = freeList;
-		freeList = freeList->next;
-	}
-	else
-	{
-		list = malloc(sizeof(list_t));
-	}
-	assert(list != NULL);
+// 	if (freeList != NULL)
+// 	{
+// 		list = freeList;
+// 		freeList = freeList->next;
+// 	}
+// 	else
+// 	{
+// 		list = malloc(sizeof(list_t));
+// 	}
+// 	assert(list != NULL);
 
-	list->next = NULL;
-	list->data = data;
+// 	list->next = NULL;
+// 	list->data = data;
 
-	return list;
-}
+// 	return list;
+// }
 
-/** Single linked list */
-void add(list_t *list, rat *data)
-{
-	list_t *link;
-	list_t *temp;
+// /** Single linked list */
+// void add(list_t *list, rat *data)
+// {
+// 	list_t *link;
+// 	list_t *temp;
 
-	link = new_list(data);
+// 	link = new_list(data);
 
-	link->next = list;
-	list = link;
-}
+// 	link->next = list;
+// 	list = link;
+// }
 
 // typedef struct list_t list_t;
 // struct list_t
@@ -300,17 +300,17 @@ void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t row
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
-	list_t *pos = new_list(NULL);
-	list_t *neg = new_list(NULL);
-	list_t *zero = new_list(NULL);
+	// list_t *pos = new_list(NULL);
+	// list_t *neg = new_list(NULL);
+	// list_t *zero = new_list(NULL);
 
 	size_t n1;
 	size_t n2;
 	n1 = 0;
 	n2 = 0;
 
-	int a;
-    int b;
+	// int a;
+    // int b;
 
 	// swapRows(ineq, var, t, q, rowOne, rowTwo);
 
