@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define DEBUG   (0)
+#define DEBUG   (1)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -412,12 +412,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 
 
-
-
-
-	}
-
-
 	//
 	// for (size_t i = 0 ; i < n2 ; i++)
 	// {
@@ -488,20 +482,20 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 				b.p = -2147483648;
 
 				for (size_t i = 0; i < n1; i++) {
-					if (q[i] < B){
+					if (subq(q[i],B).p < 0){
 						B = q[i];
 					}
 				}
 				for(size_t i = n1; i < n2; i++) {
-					if (q[i] >b){
+					if (subq(q[i],b).p > 0){
 						b = q[i];
 					}
 				}
 				for(size_t i = n2; i < ineq; i++) {
-					if(q[i] < 0)
+					if(q[i].p < 0)
 						return 0;
 				}
-				if (B < b) {
+				if (subq(B,b).p < 0) {
 					return 0;
 				}
 				return 1;
@@ -563,7 +557,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		// 		return 1;
 		// 	}
 		// }
-	}
 
 	/** STEG 6 */
 
