@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define DEBUG   (1)
+#define DEBUG   (0)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
