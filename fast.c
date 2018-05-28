@@ -247,9 +247,6 @@ void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 	if (neg->next != NULL){
 		step71(ineq, var, newT, newQ, pos, neg->next, count);
 	}
-	if (pos->next != NULL) {
-		step71(ineq, var, newT, newQ, pos->next, neg, count);
-	}
 }
 
 void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* zero, int count)
@@ -307,14 +304,14 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 		else if (t[i][var-1].p < 0)
 		{
 			// add(neg, rowTemp);
-			add(pos,&t[i][0]);
+			add(neg,&t[i][0]);
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
 		{
 			// add(zero, rowTemp);
-			add(pos,&t[i][0]);
+			add(zero,&t[i][0]);
 			/** Lägg till sistsist */
 		}
 	}
@@ -326,9 +323,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 	// rat tNew[ineqPrim][varPrim];
 	// rat qNew[ineqPrim];
 	//
-
-	step3(pos, var);
-	step3(neg, var);
+	if (n1>0) {
+	step3(pos, varPrim);
+	}
+	if (n2-n1>0) {
+	step3(neg, varPrim);
+	}
 
 	//
 	// for (size_t i = 0 ; i < n2 ; i++)
@@ -443,16 +443,13 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 
 	/** STEG 6 */
 
-	#if 0
-	b[r] <= B[r]
-	Add eq from step 2
-	sprim = s - n2 + n1 * (n2 - n1);
-	#endif
 
+	// b[r] <= B[r]
+	// Add eq from step 2
+	// sprim = s - n2 + n1 * (n2 - n1);
 	// 	ttemp[n1*(n2-n1)][var]
 	// 	int count = 0 ;
 	// 	while (pos != NULL){}
-
 	// 	for(size_t j=0; j < var; j++){
 	// 		ttemp[count][j] = pos.data[j];
 	// 	}
@@ -460,7 +457,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 	// 	count++;
 	// 	}
 	// while (neg != NULL) {
-
 	// 	for(size_t j=0; j < var; j++){
 	// 	ttemp[count][j] = neg.data[j];
 	// 	}
@@ -468,17 +464,17 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 	// 	count++;
 	// }
 
-
-
-
-
-
-
 	rat newT[ineqPrim][varPrim];
 	rat newQ[ineqPrim];
 	int count = 0;
-	step73(ineq, var, newT, newQ, pos, neg, count);
-	step72(ineq, var, newT, newQ, zero, count);
+
+	if (n1 > 0 && n2 > n1) {
+		step73(ineqPrim, varPrim, newT, newQ, pos, neg, count);
+	}
+	if (ineqPrim-n2> 0) {
+		step72(ineqPrim, varPrim, newT, newQ, zero, count);
+	}
+
 	return eliminate(ineqPrim, varPrim, newT);
 
 
