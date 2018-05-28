@@ -52,30 +52,6 @@ rat reduce(rat x)
 	return x;
 }
 
-// rat addq(rat x, rat y)
-// {
-// 	rat z;
-
-// 	z.p = x.p * y.q + y.p * x.q;
-// 	z.q = x.q * y.q;
-
-// 	z = reduce(z);
-
-// 	return z;
-// }
-
-// rat subq(rat x, rat y)
-// {
-// 	rat z;
-
-// 	z.p = x.p * y.q - y.p * x.q;
-// 	z.q = x.q * y.q;
-
-// 	z = reduce(z);
-
-// 	return z;
-// }
-
 rat subq(rat x, rat y)
 {
 	rat z;
@@ -85,18 +61,6 @@ rat subq(rat x, rat y)
 
 	return z;
 }
-
-// rat mulq(rat x, rat y)
-// {
-// 	rat z;
-
-// 	z.p = x.p * y.p;
-// 	z.q = x.q * y.q;
-
-// 	z = reduce(z);
-
-// 	return z;
-// }
 
 rat divq(rat x, rat y)
 {
@@ -229,12 +193,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		pr("Else rad 477\n");
 		rat B;
 		rat b;
-		// B.q=1;
-		// b.q=1;
-		// B.p = ;
-		// b.p = INT_MIN;
-		// B.p = 2147483647/2;
-		// b.p = -2147483648/2;
 
 		#if DEBUG
 			pr("Efter steg någonting\n");
@@ -262,7 +220,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		for (size_t i = 0; i < n1; i++) {
 			pr("Loop 501a\n i=%zu\n", i);
-			// if (i == 0 || subq(q[i],B).p < 0){
 			if (i == 0 || compare(q[i],B)){
 				B = q[i];
 				pr("Loop 501b\n B=%ld \n", B.p);
@@ -274,7 +231,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		for(size_t i = n1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
 			pr("Loop 509a\n b=%ld\n", b.p);
-			// if (i == n1 || subq(q[i],b).p > 0){
 			if (i == n1 || compare(b,q[i])){
 				b = q[i];
 				pr("Loop 509b\n b=%ld \n", b.p);
@@ -287,8 +243,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 				pr("Hejdå 1\n");
 				return 0;
 		}
-
-		// if (subq(B,b).p < 0) {
+		
 		if (compare(B,b)) {
 			pr("Hejdå 2\n");
 			return 0;
