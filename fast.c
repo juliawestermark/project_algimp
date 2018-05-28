@@ -192,92 +192,92 @@ rat divq(rat x, rat y)
 	return z;
 }
 
-void step3(list_t* list, size_t var)
-{
-	if (list->data==NULL) {
-		return;
-	}
-	else {
-		for(size_t j=0; j < var; j++){
-			list->data[j] = divq((list->data)[j],list->data[var-1]);
-		}
-		list->data[var] = divq(list->data[var],list->data[var-1]);
-	}
-	step3(list->next, var);
-}
+// void step3(list_t* list, size_t var)
+// {
+// 	if (list->data==NULL) {
+// 		return;
+// 	}
+// 	else {
+// 		for(size_t j=0; j < var; j++){
+// 			list->data[j] = divq((list->data)[j],list->data[var-1]);
+// 		}
+// 		list->data[var] = divq(list->data[var],list->data[var-1]);
+// 	}
+// 	step3(list->next, var);
+// }
 
-rat step44(rat B, list_t* list, size_t var)
-{
-	if (list->data == NULL){
-		return B;
-	}
-	else{
-		if (subq(list->data[var],B).p<0) {
-			B = list->data[var];
-		}
-		return step44(B, list->next, var);
-	}
-}
+// rat step44(rat B, list_t* list, size_t var)
+// {
+// 	if (list->data == NULL){
+// 		return B;
+// 	}
+// 	else{
+// 		if (subq(list->data[var],B).p<0) {
+// 			B = list->data[var];
+// 		}
+// 		return step44(B, list->next, var);
+// 	}
+// }
 
-rat step45(rat b, list_t* list, size_t var)
-{
-	if (list->data == NULL){
-		return b;
-	}
-	else{
-		if (subq(list->data[var],b).p>0) {
-			b = list->data[var];
-		}
-		return step45(b, list->next, var);
-	}
-}
+// rat step45(rat b, list_t* list, size_t var)
+// {
+// 	if (list->data == NULL){
+// 		return b;
+// 	}
+// 	else{
+// 		if (subq(list->data[var],b).p>0) {
+// 			b = list->data[var];
+// 		}
+// 		return step45(b, list->next, var);
+// 	}
+// }
 
-bool step46(list_t* list, size_t var)
-{
-	if (list->data == NULL){
-		return 1;
-	}
-	if (list->data[var].p < 0){
-		return 0;
-	}
-	else{
-		return step46(list->next, var);
-	}
-}
+// bool step46(list_t* list, size_t var)
+// {
+// 	if (list->data == NULL){
+// 		return 1;
+// 	}
+// 	if (list->data[var].p < 0){
+// 		return 0;
+// 	}
+// 	else{
+// 		return step46(list->next, var);
+// 	}
+// }
 
-void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
-	for(size_t j = 0; j < var; j++){
-		newT[count][j] = subq(pos->data[j], neg->data[j]);
-	}
-	// newQ[count] = subq(pos->data[var], neg->data[var]);
-	newT[count][var] = subq(pos->data[var], neg->data[var]);
-	count++;
-	if (neg->next != NULL){
-		step71(ineq, var, newT, newQ, pos, neg->next, count);
-	}
-}
+// void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
+// 	for(size_t j = 0; j < var; j++){
+// 		newT[count][j] = subq(pos->data[j], neg->data[j]);
+// 	}
+// 	// newQ[count] = subq(pos->data[var], neg->data[var]);
+// 	newT[count][var] = subq(pos->data[var], neg->data[var]);
+// 	count++;
+// 	if (neg->next != NULL){
+// 		step71(ineq, var, newT, newQ, pos, neg->next, count);
+// 	}
+// }
 
-void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* zero, int count)
-{
-	for (size_t j = 0; j < var; j++){
-		newT[count][j] = zero->data[j];
-	}
-	// newQ[count] = zero->data[var];
-	newT[count][var] = zero->data[var];
-	count++;
-	if(zero->next != NULL) {
-		step72(ineq, var, newT, newQ, zero->next, count);
-	}
-	count = 0;
-}
+// void step72(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* zero, int count)
+// {
+// 	for (size_t j = 0; j < var; j++){
+// 		newT[count][j] = zero->data[j];
+// 	}
+// 	// newQ[count] = zero->data[var];
+// 	newT[count][var] = zero->data[var];
+// 	count++;
+// 	if(zero->next != NULL) {
+// 		step72(ineq, var, newT, newQ, zero->next, count);
+// 	}
+// 	count = 0;
+// }
 
 
-void step73(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
-	step71(ineq, var, newT, newQ, pos, neg, count);
-	if(pos->next != NULL) {
-		step73(ineq, var, newT, newQ, pos->next, neg, count);
-	}
-}
+// void step73(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t* pos, list_t* neg, int count){
+// 	step71(ineq, var, newT, newQ, pos, neg, count);
+// 	if(pos->next != NULL) {
+// 		step73(ineq, var, newT, newQ, pos->next, neg, count);
+// 	}
+// }
 
 void db() {
 
