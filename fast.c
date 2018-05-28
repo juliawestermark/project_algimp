@@ -347,38 +347,38 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
     }
 	#endif
 
-	/** STEG 2 */
-	for (i = 0; i < ineq; i++)
-	{
-		// rat rowTemp[var+1];
-		// for(size_t j = 0 ; j < var ; j++) {
-		// 	rowTemp[j] = t[i][j];
-		// }
-		// rowTemp[var] = q[i];
+	// /** STEG 2 */
+	// for (i = 0; i < ineq; i++)
+	// {
+	// 	// rat rowTemp[var+1];
+	// 	// for(size_t j = 0 ; j < var ; j++) {
+	// 	// 	rowTemp[j] = t[i][j];
+	// 	// }
+	// 	// rowTemp[var] = q[i];
 
-		if (t[i][var-1].p > 0)
-		{
-			/** Pusha till början av lista */
-			// add(pos,rowTemp);
-			add(pos,&t[i][0]);
-			n1++;
-			n2++;
-		}
-		else if (t[i][var-1].p < 0)
-		{
-			// add(neg, rowTemp);
-			add(neg,&t[i][0]);
-			/** Pusha till slutet av lista */
-			n2++;
-		}
-		else
-		{
-			// add(zero, rowTemp);
-			add(zero,&t[i][0]);
-			/** Lägg till sistsist */
-		}
-	}
-	db();
+	// 	if (t[i][var-1].p > 0)
+	// 	{
+	// 		/** Pusha till början av lista */
+	// 		// add(pos,rowTemp);
+	// 		add(pos,&t[i][0]);
+	// 		n1++;
+	// 		n2++;
+	// 	}
+	// 	else if (t[i][var-1].p < 0)
+	// 	{
+	// 		// add(neg, rowTemp);
+	// 		add(neg,&t[i][0]);
+	// 		/** Pusha till slutet av lista */
+	// 		n2++;
+	// 	}
+	// 	else
+	// 	{
+	// 		// add(zero, rowTemp);
+	// 		add(zero,&t[i][0]);
+	// 		/** Lägg till sistsist */
+	// 	}
+	// }
+	// db();
 	/** STEG 3 */
 
 	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
