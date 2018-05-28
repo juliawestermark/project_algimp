@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define DEBUG   (0)
+#define DEBUG   (1)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -115,7 +115,8 @@ rat reduce(rat x)
 
 	if (a == 0 || b == 0)
 	{
-		x.q = 0;
+		x.p = 0;
+		x.q = 1;
 		return x;
 	}
 
