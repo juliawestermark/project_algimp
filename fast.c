@@ -300,6 +300,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	// list_t *neg = new_list(NULL);
 	// list_t *zero = new_list(NULL);
 
+	printf("Start\n");
+
 	size_t n1;
 	size_t n2;
 	n1 = 0;
@@ -316,6 +318,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	size_t i = 0;
 
 	while (i < n2 && i < ineq-1) {
+		printf("Loop 1\n");
 		if (t[i][var-1].p > 0) {
 			swapRows(ineq, var, t, q, i, n1);
 			n1++;
@@ -391,6 +394,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	//
 
 	for(size_t i = 0; i < n2; i++) {
+		printf("Loop 2\n");
 		q[i] = divq(q[i],t[i][var-1]);
 		for(size_t j = 0; j < var; j++) {
 			t[i][j] = divq(t[i][j],t[i][var-1]);
@@ -470,6 +474,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		}
 		else{
+			printf("Else rad 477\n");
 
 			// if(n2>n1) {
 				rat B;
@@ -493,6 +498,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 				for (size_t i = 0; i < n1; i++) {
 					if (subq(q[i],B).p < 0){
+						printf("Loop 501\n");
 						B = q[i];
 					}
 				}
@@ -500,11 +506,13 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 				for(size_t i = n1; i < n2; i++) {
 					if (subq(q[i],b).p > 0){
+						printf("Loop 509\n");
 						b = q[i];
 					}
 				}
 
 				for(size_t i = n2; i < ineq; i++) {
+					printf("Loop 515\n");
 					if(q[i].p < 0)
 						printf("Hejdå 1\n");
 						return 0;
