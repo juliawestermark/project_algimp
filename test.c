@@ -33,6 +33,7 @@ int main() {
         printf("<= \t %hhd", c[i]);
         printf("\n");
     }
+        printf("\n");
 
     // printf("End\n");
     

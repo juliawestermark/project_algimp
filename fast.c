@@ -3,6 +3,14 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#define DEBUG   (0)
+
+#if DEBUG
+#define pr(...)         fprintf(stderr, __VA_ARGS__)
+#else
+#define pr(...)
+#endif
+
 /** typedef struct rational rat; */
 
 typedef struct rational
@@ -275,8 +283,22 @@ void db() {
 
 }
 
+void swap(rat *a, rat *b) {
+    rat temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
-bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
+// void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq][var], size_t rowOne, size_t rowTwo) {
+void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t rowOne, size_t rowTwo) {
+	size_t j;
+	for (j = 0; j < var; j++) {
+		swap(&t[rowOne][j], &t[rowTwo][j]);
+	}
+	swap(&q[rowOne], &q[rowTwo]);
+}
+
+bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	list_t *pos = new_list(NULL);
 	list_t *neg = new_list(NULL);
@@ -288,10 +310,45 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 	n1 = 0;
 	n2 = 0;
 
+	int a;
+    int b;
+
+	// swapRows(ineq, var, t, q, rowOne, rowTwo);
+
 	db();
 
+	n1 = 0;
+	n2 = ineq-1;
+
+	size_t i = 0;
+
+	while (i < n2) {
+		if (t[i][var-1].p > 0) {
+			swapRows(ineq, var, t, q, i, n1);
+			n1++;
+		}
+		if (t[i][var-1].p < 0) {
+			/** Gör inget */
+		} else {
+			swapRows(ineq, var, t, q, i, n2);
+			n2--;
+            i--;
+		}
+		i++;
+	}
+
+	#if DEBUG
+	for (i = 0; i < ineq; i++) {
+        for (size_t j = 0; j < var; j++) {
+            pr("%lld \t", t[i][j].p);
+        }
+        pr("<= \t %lld", q[i].p);
+        pr("\n");
+    }
+	#endif
+
 	/** STEG 2 */
-	for (size_t i = 0; i < ineq; i++)
+	for (i = 0; i < ineq; i++)
 	{
 		// rat rowTemp[var+1];
 		// for(size_t j = 0 ; j < var ; j++) {
@@ -482,7 +539,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 		step72(ineqPrim, varPrim, newT, newQ, zero, count);
 	}
 
-	return eliminate(ineqPrim, varPrim, newT);
+	return eliminate(ineqPrim, varPrim, newT, newQ);
 
 
 
@@ -544,8 +601,8 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	size_t var; /** variables, r */
 	size_t ineq; /** inequalities, s */
 
-	rat t[rows][cols+1];
-	// rat q[rows];
+	rat t[rows][cols];
+	rat q[rows];
 
 	var = cols;
 	ineq = rows;
@@ -561,14 +618,14 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 			ttemp.q = 1;
 			t[i][j] = ttemp;
 		}
-		qtemp.p = (long long)c[i];
-		qtemp.q = 1;
-		t[i][var] = qtemp;
-
 		// qtemp.p = (long long)c[i];
 		// qtemp.q = 1;
-		// q[i] = qtemp;
+		// t[i][var] = qtemp;
+
+		qtemp.p = (long long)c[i];
+		qtemp.q = 1;
+		q[i] = qtemp;
 	}
 
-	return eliminate(ineq, var, t);
+	return eliminate(ineq, var, t, q);
 }
