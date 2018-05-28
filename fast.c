@@ -15,7 +15,6 @@ typedef struct list_t list_t;
 struct list_t
 {
 	list_t *next;
-	list_t *prev;
 	rat *data;
 };
 
@@ -58,6 +57,7 @@ void add(list_t *list, rat *data)
 // struct list_t
 // {
 // 	list_t *next;
+// list_t *prev;
 // 	rat *data;
 // };
 
@@ -274,6 +274,10 @@ void step73(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 	}
 }
 
+void db() {
+	
+}
+
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 
@@ -307,17 +311,18 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 		else if (t[i][var-1].p < 0)
 		{
 			// add(neg, rowTemp);
-			add(pos,&t[i][0]);
+			add(neg,&t[i][0]);
 			/** Pusha till slutet av lista */
 			n2++;
 		}
 		else
 		{
 			// add(zero, rowTemp);
-			add(pos,&t[i][0]);
+			add(zero,&t[i][0]);
 			/** Lägg till sistsist */
 		}
 	}
+	db()
 	/** STEG 3 */
 
 	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
