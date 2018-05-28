@@ -116,18 +116,6 @@ rat getDiff(rat x, rat y)
 	return z;
 }
 
-bool isZero(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t n1, size_t n2)
-{
-	while (t[n2-1][var-1].p == 0) {
-		n2--;
-	}
-	if (n2 > n1) {
-		return 1;
-	} else {
-		return 0;
-	}
-}
-
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 {
 
@@ -147,11 +135,14 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		} else if (t[i][var-1].p < 0) {
 			/** Gör inget */
 		} else {
-			if (isZero(ineq, var, t, q, n1, n2)) {
-			swapRows(ineq, var, t, q, i, n2-1);
-			n2--;
-            if (i < ineq - 1) {
-				i--;
+			while (t[n2-1][var-1].p == 0) {
+				n2--;
+			}
+			if (n2 > n1) {
+				swapRows(ineq, var, t, q, i, n2-1);
+				n2--;
+				if (i < ineq - 1) {
+					i--;
 			}
 			}
 		}
