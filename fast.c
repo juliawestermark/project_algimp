@@ -317,7 +317,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	db();
 
 	n1 = 0;
-	n2 = ineq-1;
+	n2 = ineq;
 
 	size_t i = 0;
 
@@ -329,7 +329,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (t[i][var-1].p < 0) {
 			/** Gör inget */
 		} else {
-			swapRows(ineq, var, t, q, i, n2);
+			swapRows(ineq, var, t, q, i, n2-1);
 			n2--;
             i--;
 		}
@@ -337,6 +337,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	}
 
 	#if DEBUG
+	pr("n1=%zu, n2=%zu, ineq=%zu\n", n1, n2, ineq);
 	for (i = 0; i < ineq; i++) {
         for (size_t j = 0; j < var; j++) {
             pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
