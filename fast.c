@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define DEBUG   (1)
+#define DEBUG   (0)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -307,7 +307,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	// list_t *neg = new_list(NULL);
 	// list_t *zero = new_list(NULL);
 
-	printf("Start\n");
+	pr("Start\n");
 
 	size_t n1;
 	size_t n2;
@@ -326,7 +326,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	while (i < n2 && i < ineq) {
 		db();
-		printf("Loop 1\n");
+		pr("Loop 1\n");
 		if (t[i][var-1].p > 0) {
 			swapRows(ineq, var, t, q, i, n1);
 			n1++;
@@ -403,16 +403,16 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	//
 
 	for(size_t i = 0; i < n2; i++) {
-		printf("Loop 2\n");
+		pr("Loop 2\n");
 		q[i] = divq(q[i],t[i][var-1]);
-		printf("Är det här? i= %zu \n", i);
+		pr("Är det här? i= %zu \n", i);
 		for(size_t j = 0; j < var; j++) {
-			printf("Eller här? j= %zu \n", j);
+			pr("Eller här? j= %zu \n", j);
 			t[i][j] = divq(t[i][j],t[i][var-1]);
-			printf("Eller kanske här? var = %zu\n", var);
+			pr("Eller kanske här? var = %zu\n", var);
 		}
 	}
-	printf("Loop2 är klar\n");
+	pr("Loop2 är klar\n");
 
 	#if DEBUG
 	pr("Efter steg tre\n");
@@ -487,17 +487,17 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		}
 		else{
-			printf("Else rad 477\n");
+			pr("Else rad 477\n");
 
 			// if(n2>n1) {
 				rat B;
 				rat b;
 				B.q=1;
 				b.q=1;
-				B.p = LLONG_MAX;
-				b.p = LLONG_MIN;
-				// B.p = 2147483647;
-				// b.p = -2147483648;
+				// B.p = ;
+				// b.p = INT_MIN;
+				B.p = 2147483647/2;
+				b.p = -2147483648/2;
 
 				#if DEBUG
 					pr("Efter steg någonting\n");
@@ -511,32 +511,38 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 					pr("\n");
 				#endif
 
+				pr("var, n1, n2, ineq = %zu, %zu, %zu, %zu", var, n1, n2, ineq);
+
 				for (size_t i = 0; i < n1; i++) {
+					pr("Loop 501a\n i=%zu\n", i);
 					if (subq(q[i],B).p < 0){
-						printf("Loop 501\n");
 						B = q[i];
+						pr("Loop 501b\n B=%lld \n", B.p);
 					}
 				}
+				pr("Mellan for typ rad 523\n \n");
 				
 
 				for(size_t i = n1; i < n2; i++) {
+					pr("Loop 509a\n i=%zu\n", i);
+					pr("Loop 509a\n b=%lld\n", b.p);
 					if (subq(q[i],b).p > 0){
-						printf("Loop 509\n");
 						b = q[i];
+						pr("Loop 509b\n b=%lld \n", b.p);
 					}
 				}
 
 				for(size_t i = n2; i < ineq; i++) {
-					printf("Loop 515\n");
+					pr("Loop 515\n");
 					if(q[i].p < 0)
-						printf("Hejdå 1\n");
+						pr("Hejdå 1\n");
 						return 0;
 				}
 				if (subq(B,b).p < 0) {
-					printf("Hejdå 2\n");
+					pr("Hejdå 2\n");
 					return 0;
 				}
-				printf("Hejdå 3\n");
+				pr("Hejdå 3\n");
 				return 1;
 			// }
 		}
@@ -717,7 +723,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
 {
-	printf("Hej\n");
+	pr("Hej\n");
 	size_t var; /** variables, r */
 	size_t ineq; /** inequalities, s */
 
