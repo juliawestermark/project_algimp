@@ -216,6 +216,17 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 			pr("\n");
 		#endif
 
+		if (n1 == n2) {
+			b.q=1;
+			b.p = -2147483648/2;
+
+		}
+
+		if (n1 == 0) {
+			B.q=1;
+			B.p = 2147483647/2;
+		}
+
 		pr("var, n1, n2, ineq = %zu, %zu, %zu, %zu", var, n1, n2, ineq);
 
 		for (size_t i = 0; i < n1; i++) {
