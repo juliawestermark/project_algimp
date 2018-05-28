@@ -4,4 +4,4 @@ main.o
 malloc.o
 note
 a.out*
-fastOld.c
+fastOld*
