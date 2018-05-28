@@ -322,7 +322,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 			/** Lägg till sistsist */
 		}
 	}
-	db()
+	db();
 	/** STEG 3 */
 
 	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
