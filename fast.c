@@ -50,7 +50,7 @@ void add(list_t *list, rat *data)
 	link = new_list(data);
 
 	link->next = list;
-	link->prev = temp;
+	list = link;
 }
 
 // typedef struct list_t list_t;
@@ -275,7 +275,7 @@ void step73(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 }
 
 void db() {
-	
+
 }
 
 
