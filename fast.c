@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define DEBUG   (1)
 
@@ -18,6 +19,8 @@ typedef struct rational
 	long long p;
 	long long q;
 } rat;
+
+
 
 // typedef struct list_t list_t;
 // struct list_t
@@ -107,8 +110,8 @@ typedef struct rational
 
 rat reduce(rat x)
 {
-	int a = x.p;
-	int b = x.q;
+	long long a = x.p;
+	long long b = x.q;
 
 	if (a == 0 || b == 0)
 	{
@@ -135,6 +138,7 @@ rat reduce(rat x)
 	x.p /= a;
 	x.q /= a;
 
+	// pr("HEJ \n %")
 	return x;
 }
 
@@ -490,8 +494,10 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 				rat b;
 				B.q=1;
 				b.q=1;
-				B.p = 2147483647;
-				b.p = -2147483648;
+				B.p = LLONG_MAX;
+				b.p = LLONG_MIN;
+				// B.p = 2147483647;
+				// b.p = -2147483648;
 
 				#if DEBUG
 					pr("Efter steg någonting\n");
