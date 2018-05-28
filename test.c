@@ -25,7 +25,7 @@ int main() {
     //     }
     //     c[i] = i;
     // }
-
+    #if 0
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
             printf("%hhd \t", a[i][j]);
@@ -36,6 +36,7 @@ int main() {
         printf("\n");
 
     // printf("End\n");
+    #endif
     
     if (fm(rows, cols, a, c)) {
         printf("Yes!\n");

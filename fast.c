@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define DEBUG   (1)
+#define DEBUG   (0)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -279,10 +279,6 @@ rat divq(rat x, rat y)
 // 	}
 // }
 
-void db() {
-
-}
-
 void swap(rat *a, rat *b) {
     rat temp = *a;
     *a = *b;
@@ -313,8 +309,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
     // int b;
 
 	// swapRows(ineq, var, t, q, rowOne, rowTwo);
-
-	db();
 
 	n1 = 0;
 	n2 = ineq;
