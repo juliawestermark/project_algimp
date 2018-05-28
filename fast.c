@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define DEBUG   (0)
+#define DEBUG   (1)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -150,9 +150,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	pr("n1=%zu, n2=%zu, ineq=%zu\n", n1, n2, ineq);
 	for (i = 0; i < ineq; i++) {
         for (size_t j = 0; j < var; j++) {
-            pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
+            pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
         }
-        pr("<= \t %lld/%lld", q[i].p, q[i].q);
+        pr("<= \t %ld/%ld", q[i].p, q[i].q);
         pr("\n");
     }
     pr("\n");
@@ -180,9 +180,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	pr("Efter steg tre\n");
 	for (i = 0; i < ineq; i++) {
         for (size_t j = 0; j < var; j++) {
-            pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
+            pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
         }
-        pr("<= \t %lld/%lld", q[i].p, q[i].q);
+        pr("<= \t %ld/%ld", q[i].p, q[i].q);
         pr("\n");
     }
     pr("\n");
@@ -208,9 +208,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 			pr("Efter steg någonting\n");
 			for (i = 0; i < ineq; i++) {
 				for (size_t j = 0; j < var; j++) {
-					pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
+					pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
 				}
-				pr("<= \t %lld/%lld", q[i].p, q[i].q);
+				pr("<= \t %ld/%ld", q[i].p, q[i].q);
 				pr("\n");
 			}
 			pr("\n");
@@ -219,7 +219,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (n1 == n2) {
 			b.q=1;
 			b.p = -2147483648/2;
-
 		}
 
 		if (n1 == 0) {
@@ -231,9 +230,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		for (size_t i = 0; i < n1; i++) {
 			pr("Loop 501a\n i=%zu\n", i);
-			if (subq(q[i],B).p < 0 || i == 0){
+			if (i == 0 || subq(q[i],B).p < 0){
 				B = q[i];
-				pr("Loop 501b\n B=%lld \n", B.p);
+				pr("Loop 501b\n B=%ld \n", B.p);
 			}
 		}
 
@@ -241,10 +240,10 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		
 		for(size_t i = n1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
-			pr("Loop 509a\n b=%lld\n", b.p);
-			if (subq(q[i],b).p > 0 || i == n1){
+			pr("Loop 509a\n b=%ld\n", b.p);
+			if (i == n1 || subq(q[i],b).p > 0){
 				b = q[i];
-				pr("Loop 509b\n b=%lld \n", b.p);
+				pr("Loop 509b\n b=%ld \n", b.p);
 			}
 		}
 
