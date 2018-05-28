@@ -54,12 +54,12 @@ void add(list_t *list, rat *data)
 	link->prev = temp;
 }
 
-typedef struct list_t list_t;
-struct list_t
-{
-	list_t *next;
-	rat *data;
-};
+// typedef struct list_t list_t;
+// struct list_t
+// {
+// 	list_t *next;
+// 	rat *data;
+// };
 
 // list_t *new_list(rat *data)
 // {
