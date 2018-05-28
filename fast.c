@@ -400,6 +400,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 			t[i][j] = divq(t[i][j],t[i][var-1]);
 		}
 	}
+	printf("Loop2 är klar\n");
 
 	#if DEBUG
 	pr("Efter steg tre\n");
