@@ -294,7 +294,7 @@ void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t row
 	swap(&q[rowOne], &q[rowTwo]);
 }
 void db() {
-	
+
 }
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
@@ -326,8 +326,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (t[i][var-1].p > 0) {
 			swapRows(ineq, var, t, q, i, n1);
 			n1++;
-		}
-		if (t[i][var-1].p < 0) {
+		} else if (t[i][var-1].p < 0) {
 			/** Gör inget */
 		} else {
 			swapRows(ineq, var, t, q, i, n2-1);
@@ -402,8 +401,11 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	for(size_t i = 0; i < n2; i++) {
 		printf("Loop 2\n");
 		q[i] = divq(q[i],t[i][var-1]);
+		printf("Är det här? i= %zu \n", i);
 		for(size_t j = 0; j < var; j++) {
+			printf("Eller här? j= %zu \n", j);
 			t[i][j] = divq(t[i][j],t[i][var-1]);
+			printf("Eller kanske här? var = %zu\n", var);
 		}
 	}
 	printf("Loop2 är klar\n");
