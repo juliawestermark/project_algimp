@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define DEBUG   (0)
+#define DEBUG   (1)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -293,6 +293,9 @@ void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t row
 	}
 	swap(&q[rowOne], &q[rowTwo]);
 }
+void db() {
+	
+}
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
@@ -317,7 +320,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	size_t i = 0;
 
-	while (i < n2 && i < ineq-1) {
+	while (i < n2 && i < ineq) {
+		db();
 		printf("Loop 1\n");
 		if (t[i][var-1].p > 0) {
 			swapRows(ineq, var, t, q, i, n1);
@@ -328,7 +332,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		} else {
 			swapRows(ineq, var, t, q, i, n2-1);
 			n2--;
-            i--;
+            if (i < ineq - 1) {
+				i--;
+			}
 		}
 		i++;
 	}

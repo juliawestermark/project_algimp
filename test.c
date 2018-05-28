@@ -6,6 +6,8 @@
 int main() {
     size_t rows = 5;
     size_t cols = 3;
+    // size_t rows = 4;
+    // size_t cols = 2;
     // signed char a[4][2] = {{2, -11}, {-3, 2}, {1, 3}, {-2, 0}};
     signed char a[5][3] = {{-119, 77, -56}, {11, 67, -8 }, {-101, -4, 75}, {-5, -22, -38 }, {-83, -104, 28 }};
 //     5 3
@@ -40,7 +42,7 @@ int main() {
     //     }
     //     c[i] = i;
     // }
-    #if 0
+    #if 1
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
             printf("%hhd \t", a[i][j]);
