@@ -315,7 +315,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	size_t i = 0;
 
-	while (i < n2) {
+	while (i < n2 && i < ineq-1) {
 		if (t[i][var-1].p > 0) {
 			swapRows(ineq, var, t, q, i, n1);
 			n1++;
