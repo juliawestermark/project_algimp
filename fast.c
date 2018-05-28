@@ -14,14 +14,14 @@
 
 typedef struct rational
 {
-	long long p;
-	long long q;
+	long p;
+	long q;
 } rat;
 
 rat reduce(rat x)
 {
-	long long a = x.p;
-	long long b = x.q;
+	long a = x.p;
+	long b = x.q;
 
 	if (a == 0 || b == 0)
 	{
@@ -301,16 +301,16 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 	for (size_t i = 0; i < ineq; i++)
 	{
 		rat qtemp;
-		
+
 		for (size_t j = 0; j < var; j++)
 		{
 			rat ttemp;
-			ttemp.p =(long long)a[i][j];
+			ttemp.p =(long)a[i][j];
 			ttemp.q = 1;
 			t[i][j] = ttemp;
 		}
 
-		qtemp.p = (long long)c[i];
+		qtemp.p = (long)c[i];
 		qtemp.q = 1;
 		q[i] = qtemp;
 	}
