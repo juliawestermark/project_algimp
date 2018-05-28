@@ -506,11 +506,14 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 				for(size_t i = n2; i < ineq; i++) {
 					if(q[i].p < 0)
+						printf("Hejdå 1\n");
 						return 0;
 				}
 				if (subq(B,b).p < 0) {
+					printf("Hejdå 2\n");
 					return 0;
 				}
+				printf("Hejdå 3\n");
 				return 1;
 			// }
 		}
