@@ -291,6 +291,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var]) {
 	n1 = 0;
 	n2 = 0;
 
+	db();
+
 	/** STEG 2 */
 	for (size_t i = 0; i < ineq; i++)
 	{
