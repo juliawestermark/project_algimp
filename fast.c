@@ -36,13 +36,13 @@ list_t *new_list(rat *data)
 	}
 	assert(list != NULL);
 
-	list->next = list->prev = list;
+	list->next = NULL;
 	list->data = data;
 
 	return list;
 }
 
-/** Circular list */
+/** Single linked list */
 void add(list_t *list, rat *data)
 {
 	list_t *link;
@@ -50,12 +50,52 @@ void add(list_t *list, rat *data)
 
 	link = new_list(data);
 
-	list->prev->next = link;
 	link->next = list;
-	temp = list->prev;
-	list->prev = link;
 	link->prev = temp;
 }
+
+typedef struct list_t list_t;
+struct list_t
+{
+	list_t *next;
+	rat *data;
+};
+
+// list_t *new_list(rat *data)
+// {
+// 	list_t *list;
+
+// 	if (freeList != NULL)
+// 	{
+// 		list = freeList;
+// 		freeList = freeList->next;
+// 	}
+// 	else
+// 	{
+// 		list = malloc(sizeof(list_t));
+// 	}
+// 	assert(list != NULL);
+
+// 	list->next = list->prev = list;
+// 	list->data = data;
+
+// 	return list;
+// }
+
+// /** Circular list */
+// void add(list_t *list, rat *data)
+// {
+// 	list_t *link;
+// 	list_t *temp;
+
+// 	link = new_list(data);
+
+// 	list->prev->next = link;
+// 	link->next = list;
+// 	temp = list->prev;
+// 	list->prev = link;
+// 	link->prev = temp;
+// }
 
 rat reduce(rat x)
 {
