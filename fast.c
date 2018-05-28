@@ -197,12 +197,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		pr("Else rad 477\n");
 		rat B;
 		rat b;
-		B.q=1;
-		b.q=1;
+		// B.q=1;
+		// b.q=1;
 		// B.p = ;
 		// b.p = INT_MIN;
-		B.p = 2147483647/2;
-		b.p = -2147483648/2;
+		// B.p = 2147483647/2;
+		// b.p = -2147483648/2;
 
 		#if DEBUG
 			pr("Efter steg någonting\n");
@@ -220,7 +220,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 		for (size_t i = 0; i < n1; i++) {
 			pr("Loop 501a\n i=%zu\n", i);
-			if (subq(q[i],B).p < 0){
+			if (subq(q[i],B).p < 0 || i == 0){
 				B = q[i];
 				pr("Loop 501b\n B=%lld \n", B.p);
 			}
@@ -231,7 +231,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		for(size_t i = n1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
 			pr("Loop 509a\n b=%lld\n", b.p);
-			if (subq(q[i],b).p > 0){
+			if (subq(q[i],b).p > 0 || i == n1){
 				b = q[i];
 				pr("Loop 509b\n b=%lld \n", b.p);
 			}
