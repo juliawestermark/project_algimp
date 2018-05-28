@@ -64,14 +64,24 @@ rat reduce(rat x)
 // 	return z;
 // }
 
+// rat subq(rat x, rat y)
+// {
+// 	rat z;
+
+// 	z.p = x.p * y.q - y.p * x.q;
+// 	z.q = x.q * y.q;
+
+// 	z = reduce(z);
+
+// 	return z;
+// }
+
 rat subq(rat x, rat y)
 {
 	rat z;
 
 	z.p = x.p * y.q - y.p * x.q;
 	z.q = x.q * y.q;
-
-	z = reduce(z);
 
 	return z;
 }
@@ -106,26 +116,39 @@ rat divq(rat x, rat y)
 	return z;
 }
 
-void swap(rat *a, rat *b) {
+void swap(rat *a, rat *b)
+{
     rat temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t rowOne, size_t rowTwo) {
+void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t rowOne, size_t rowTwo)
+{
 	for (size_t j = 0; j < var; j++) {
 		swap(&t[rowOne][j], &t[rowTwo][j]);
 	}
 	swap(&q[rowOne], &q[rowTwo]);
 }
 
-bool compare(rat small, rat big) {
+bool compare(rat small, rat big)
+{
 	if (small.p < 0 && big.p > 0)
 		return 1;
 	else if (small.p > 0 && big.p < 0)
 		return 0;
 	else
 		return (subq(small,big).p < 0);
+}
+
+rat getDiff(rat x, rat y)
+{
+	rat z;
+	
+	z = subq(x, y);
+	z = reduce(z);
+
+	return z;
 }
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
