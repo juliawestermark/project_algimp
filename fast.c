@@ -46,6 +46,7 @@ rat reduce(rat x)
 			b -= a;
 		}
 	}
+
 	x.p /= a;
 	x.q /= a;
 
@@ -156,9 +157,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	/** STEP 3 */
 
-	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
-	size_t varPrim = var -1;
-
 	for(size_t i = 0; i < n2; i++) {
 		pr("Loop 2\n");
 		q[i] = divq(q[i],t[i][var-1]);
@@ -195,15 +193,15 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		rat b;
 
 		#if DEBUG
-			pr("Efter steg någonting\n");
-			for (i = 0; i < ineq; i++) {
-				for (size_t j = 0; j < var; j++) {
-					pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
-				}
-				pr("<= \t %ld/%ld", q[i].p, q[i].q);
-				pr("\n");
+		pr("Efter steg någonting\n");
+		for (i = 0; i < ineq; i++) {
+			for (size_t j = 0; j < var; j++) {
+				pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
 			}
+			pr("<= \t %ld/%ld", q[i].p, q[i].q);
 			pr("\n");
+		}
+		pr("\n");
 		#endif
 
 		if (n1 == n2) {
@@ -253,6 +251,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		return 1;
 	}
 
+	size_t ineqPrim = ineq - n2 + n1* (n2-n1);
+	size_t varPrim = var -1;
+
 	if (ineqPrim > 0) {
 		/** Do nothing */
 	} else {
@@ -267,7 +268,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	for(size_t i = 0; i < n1; i++) {
 		for(size_t k = n1; k < n2; k++){
 			for(size_t j = 0; j< varPrim ; j++){
-					newT[count][j] = subq(t[i][j],t[k][j]);
+				newT[count][j] = subq(t[i][j],t[k][j]);
 			}
 			newQ[count] = subq(q[i],q[k]);
 			count++;
@@ -276,7 +277,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 
 	for(size_t i = n2; i < ineq; i++) {
 		for(size_t j = 0; j< varPrim ; j++){
-				newT[count][j] = t[i][j];
+			newT[count][j] = t[i][j];
 		}
 		newQ[count] = q[i];
 		count++;
