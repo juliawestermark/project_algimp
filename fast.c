@@ -469,9 +469,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		if (var > 1) {
 
 		}
-		else if (var == 0) {
-
-		}
 		else{
 
 			// if(n2>n1) {
@@ -596,6 +593,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 	// 	neg = neg->next;
 	// 	count++;
 	// }
+
+	if (ineqPrim > 0) {
+
+	} else {
+		return 1;
+	}
 
 	rat newT[ineqPrim][varPrim];
 	rat newQ[ineqPrim];
