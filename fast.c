@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 
 /** typedef struct rational rat; */
 
@@ -206,7 +207,7 @@ void step71(size_t ineq, size_t var, rat newT[ineq][var], rat newQ[ineq], list_t
 	if (neg->next != NULL){
 		step71(ineq, var, newT, newQ, pos, neg->next, count);
 	}
-	if(pos->next != NULL) {
+	if (pos->next != NULL) {
 		step71(ineq, var, newT, newQ, pos->next, neg, count);
 	}
 }
