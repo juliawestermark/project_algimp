@@ -471,7 +471,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		}
 		else{
 
-			if(n2>n1) {
+			// if(n2>n1) {
 				rat B;
 				rat b;
 				B.q=1;
@@ -496,11 +496,14 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 						B = q[i];
 					}
 				}
+				
+
 				for(size_t i = n1; i < n2; i++) {
 					if (subq(q[i],b).p > 0){
 						b = q[i];
 					}
 				}
+
 				for(size_t i = n2; i < ineq; i++) {
 					if(q[i].p < 0)
 						return 0;
@@ -509,7 +512,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 					return 0;
 				}
 				return 1;
-			}
+			// }
 		}
 
 		//
@@ -612,7 +615,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq]) {
 		newQ[count] = q[i];
 		count++;
 	}
-
 
 	return eliminate(ineqPrim, varPrim, newT, newQ);
 
