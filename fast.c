@@ -90,7 +90,8 @@ void swap(rat *a, rat *b)
 
 void swapRows(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq], size_t rowOne, size_t rowTwo)
 {
-	for (size_t j = 0; j < var; j++) {
+	size_t j;
+	for (j = 0; j < var; j++) {
 		swap(&t[rowOne][j], &t[rowTwo][j]);
 	}
 	swap(&q[rowOne], &q[rowTwo]);
@@ -125,6 +126,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	size_t n2 = ineq;
 
 	size_t i = 0;
+	size_t j = 0;
 
 	/** STEP 2 */
 	while (i < n2 && i < ineq) {
@@ -152,7 +154,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	#if DEBUG
 	pr("n1=%zu, n2=%zu, ineq=%zu\n", n1, n2, ineq);
 	for (i = 0; i < ineq; i++) {
-        for (size_t j = 0; j < var; j++) {
+        for (j = 0; j < var; j++) {
             pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
         }
         pr("<= \t %ld/%ld", q[i].p, q[i].q);
@@ -163,11 +165,11 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 	/** STEP 3 */
 
-	for(size_t i = 0; i < n2; i++) {
+	for(i = 0; i < n2; i++) {
 		pr("Loop 2\n");
 		q[i] = divq(q[i],t[i][var-1]);
 		pr("Är det här? i= %zu \n", i);
-		for(size_t j = 0; j < var; j++) {
+		for(j = 0; j < var; j++) {
 			pr("Eller här? j= %zu \n", j);
 			t[i][j] = divq(t[i][j],t[i][var-1]);
 			pr("Eller kanske här? var = %zu\n", var);
@@ -179,7 +181,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	#if DEBUG
 	pr("Efter steg tre\n");
 	for (i = 0; i < ineq; i++) {
-        for (size_t j = 0; j < var; j++) {
+        for (j = 0; j < var; j++) {
             pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
         }
         pr("<= \t %ld/%ld", q[i].p, q[i].q);
@@ -201,7 +203,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		#if DEBUG
 		pr("Efter steg någonting\n");
 		for (i = 0; i < ineq; i++) {
-			for (size_t j = 0; j < var; j++) {
+			for (j = 0; j < var; j++) {
 				pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
 			}
 			pr("<= \t %ld/%ld", q[i].p, q[i].q);
@@ -222,7 +224,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 		pr("var, n1, n2, ineq = %zu, %zu, %zu, %zu", var, n1, n2, ineq);
 
-		for (size_t i = 0; i < n1; i++) {
+		for (i = 0; i < n1; i++) {
 			pr("Loop 501a\n i=%zu\n", i);
 			if (i == 0 || compare(q[i],B)){
 				B = q[i];
@@ -232,7 +234,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 		pr("Mellan for typ rad 523\n \n");
 		
-		for(size_t i = n1; i < n2; i++) {
+		for(i = n1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
 			pr("Loop 509a\n b=%ld\n", b.p);
 			if (i == n1 || compare(b,q[i])){
@@ -241,7 +243,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 			}
 		}
 
-		for(size_t i = n2; i < ineq; i++) {
+		for(i = n2; i < ineq; i++) {
 			pr("Loop 515\n");
 			if(q[i].p < 0)
 				pr("Hejdå 1\n");
@@ -271,9 +273,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	rat newQ[ineqPrim];
 	int count = 0;
 
-	for(size_t i = 0; i < n1; i++) {
+	for(i = 0; i < n1; i++) {
 		for(size_t k = n1; k < n2; k++){
-			for(size_t j = 0; j< varPrim ; j++){
+			for(j = 0; j< varPrim ; j++){
 				newT[count][j] = subq(t[i][j],t[k][j]);
 			}
 			newQ[count] = subq(q[i],q[k]);
@@ -281,8 +283,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		}
 	}
 
-	for(size_t i = n2; i < ineq; i++) {
-		for(size_t j = 0; j< varPrim ; j++){
+	for(i = n2; i < ineq; i++) {
+		for(j = 0; j< varPrim ; j++){
 			newT[count][j] = t[i][j];
 		}
 		newQ[count] = q[i];
@@ -303,13 +305,15 @@ bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows]
 
 	var = cols;
 	ineq = rows;
+	size_t i;
+	size_t j;
 
 	/** STEP 1 */
-	for (size_t i = 0; i < ineq; i++)
+	for (i = 0; i < ineq; i++)
 	{
 		rat qtemp;
 
-		for (size_t j = 0; j < var; j++)
+		for (j = 0; j < var; j++)
 		{
 			rat ttemp;
 			ttemp.p =(long)a[i][j];
