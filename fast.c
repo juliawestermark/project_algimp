@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define DEBUG   (1)
+#define DEBUG   (0)
 
 #if DEBUG
 #define pr(...)         fprintf(stderr, __VA_ARGS__)
@@ -301,7 +301,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 bool fm(size_t rows, size_t cols, signed char a[rows][cols], signed char c[rows])
 {
-	printf("Hej\n");
+	pr("Hej\n");
 	size_t var; /** variables, r */
 	size_t ineq; /** inequalities, s */
 
