@@ -2,7 +2,9 @@ CC	= gcc
 CFLAGS	= -m32 -g -Wall -Wextra -std=c11 -mcpu=970 -mtune=970 -Wno-format -Wno-parentheses
 CFLAGS	= -m32 -O3 -Wall -Wextra -std=c11 -mcpu=970 -mtune=970 -Wno-format -Wno-parentheses
 CFLAGS	= -g -Wall -Wextra -std=c11 -Wno-parentheses
-OUT	= fm
+CFLAGS	= -pg
+CFLAGS	= -fprofile-arcs -ftest-coverage
+OUT		= fm
 NOTE	= note
 FILE	= fast
 
