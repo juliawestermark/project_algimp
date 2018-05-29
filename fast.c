@@ -155,9 +155,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	pr("n1=%zu, n2=%zu, ineq=%zu\n", n1, n2, ineq);
 	for (i = 0; i < ineq; i++) {
         for (j = 0; j < var; j++) {
-            pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
+            pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
         }
-        pr("<= \t %ld/%ld", q[i].p, q[i].q);
+        pr("<= \t %lld/%lld", q[i].p, q[i].q);
         pr("\n");
     }
     pr("\n");
@@ -182,9 +182,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	pr("Efter steg tre\n");
 	for (i = 0; i < ineq; i++) {
         for (j = 0; j < var; j++) {
-            pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
+            pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
         }
-        pr("<= \t %ld/%ld", q[i].p, q[i].q);
+        pr("<= \t %lld/%lld", q[i].p, q[i].q);
         pr("\n");
     }
     pr("\n");
@@ -204,9 +204,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		pr("Efter steg någonting\n");
 		for (i = 0; i < ineq; i++) {
 			for (j = 0; j < var; j++) {
-				pr("%ld/%ld \t", t[i][j].p, t[i][j].q);
+				pr("%lld/%lld \t", t[i][j].p, t[i][j].q);
 			}
-			pr("<= \t %ld/%ld", q[i].p, q[i].q);
+			pr("<= \t %lld/%lld", q[i].p, q[i].q);
 			pr("\n");
 		}
 		pr("\n");
@@ -228,7 +228,7 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 			pr("Loop 501a\n i=%zu\n", i);
 			if (i == 0 || compare(q[i],B)){
 				B = q[i];
-				pr("Loop 501b\n B=%ld \n", B.p);
+				pr("Loop 501b\n B=%lld \n", B.p);
 			}
 		}
 
@@ -236,10 +236,10 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		
 		for(i = n1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
-			pr("Loop 509a\n b=%ld\n", b.p);
+			pr("Loop 509a\n b=%lld\n", b.p);
 			if (i == n1 || compare(b,q[i])){
 				b = q[i];
-				pr("Loop 509b\n b=%ld \n", b.p);
+				pr("Loop 509b\n b=%lld \n", b.p);
 			}
 		}
 
