@@ -212,15 +212,15 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		pr("\n");
 		#endif
 
-		if (n1 == n2) {
-			b.q=1;
-			b.p = LONG_MIN/2;
-		}
+		// if (n1 == n2) {
+		// 	b.q=1;
+		// 	b.p = LONG_MIN/2;
+		// }
 
-		if (n1 == 0) {
-			B.q=1;
-			B.p = LONG_MAX/2;
-		}
+		// if (n1 == 0) {
+		// 	B.q=1;
+		// 	B.p = LONG_MAX/2;
+		// }
 
 		pr("var, n1, n2, ineq = %zu, %zu, %zu, %zu", var, n1, n2, ineq);
 
@@ -250,6 +250,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 				return 0;
 		}
 
+		if (n1 == n2 || n1 == 0)
+			return 1;
+		
 		if (compare(B,b)) {
 			pr("Hejdå 2\n");
 			return 0;
