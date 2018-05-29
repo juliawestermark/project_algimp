@@ -7,7 +7,7 @@ NOTE	= note
 FILE	= fast
 
 execute: compile
-	opreport ./fm
+	./fm
 
 compile: clean $(FILE).o malloc.o main.o error.o
 	$(CC) $(CFLAGS) -o $(OUT) -static $(FILE).o malloc.o main.o error.o -lm
