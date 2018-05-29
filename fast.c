@@ -18,6 +18,47 @@ typedef struct rational
 	long long q;
 } rat;
 
+// rat reduce(rat x)
+// {
+// 	long long a = x.p;
+// 	long long b = x.q;
+
+// 	if (a == 0 || b == 0)
+// 	{
+// 		x.p = 0;
+// 		x.q = 1;
+// 		return x;
+// 	}
+
+// 	if (a < 0)
+// 	{
+// 		a = -a;
+// 	}
+
+// 	while (a != b)
+// 	{
+// 		if (a > b)
+// 		{
+// 			a -= b;
+// 		}
+// 		else
+// 		{
+// 			b -= a;
+// 		}
+// 	}
+
+// 	x.p /= a;
+// 	x.q /= a;
+
+// 	return x;
+// }
+
+long long gcd(long long a, long long b) {  
+	if (b == 0)  
+  		return a;
+	return gcd(b, a % b);  
+}  
+
 rat reduce(rat x)
 {
 	long long a = x.p;
@@ -35,20 +76,10 @@ rat reduce(rat x)
 		a = -a;
 	}
 
-	while (a != b)
-	{
-		if (a > b)
-		{
-			a -= b;
-		}
-		else
-		{
-			b -= a;
-		}
-	}
+    long long GCD = gcd(a,b); 
 
-	x.p /= a;
-	x.q /= a;
+	x.p /= GCD;
+	x.q /= GCD;
 
 	return x;
 }
