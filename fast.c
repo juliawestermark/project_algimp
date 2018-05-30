@@ -18,7 +18,7 @@ typedef struct rational
 	long long q;
 } rat;
 
-euclid(long long a, long long b) {
+long long euclid(long long a, long long b) {
 	if (a==b) {
 		return a;
 	}
