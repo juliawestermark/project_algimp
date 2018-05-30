@@ -48,8 +48,8 @@ rat reduce(rat x)
 		}
 	}
 
-	x.p /= c;
-	x.q /= c;
+	x.p /= a;
+	x.q /= a;
 
 	return x;
 }
