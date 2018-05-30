@@ -141,8 +141,8 @@ rat reduce(rat x)
 
 	c = gcd(a, b);
 
-	x.p /= a;
-	x.q /= a;
+	x.p /= c;
+	x.q /= c;
 
 	return x;
 }
