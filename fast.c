@@ -113,7 +113,7 @@ rat getDiff(rat x, rat y)
 	rat z;
 	
 	z = subq(x, y);
-	z = reduce(z);
+	// z = reduce(z);
 
 	return z;
 }
@@ -288,9 +288,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	for(i = 0; i < n1; i++) {
 		for(k = n1; k < n2; k++){
 			for(j = 0; j< varPrim ; j++){
-				newT[count][j] = subq(t[i][j],t[k][j]);
+				newT[count][j] = getDiff(t[i][j],t[k][j]);
 			}
-			newQ[count] = subq(q[i],q[k]);
+			newQ[count] = getDiff(q[i],q[k]);
 			count++;
 		}
 	}
