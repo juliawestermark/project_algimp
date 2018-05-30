@@ -163,7 +163,7 @@ rat getDiff(rat x, rat y)
 	rat z;
 	
 	z = subq(x, y);
-	// z = reduce(z);
+	z = reduce(z);
 
 	return z;
 }
@@ -220,11 +220,13 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		pr("Loop 2\n");
 		q[i] = divq(q[i],t[i][var-1]);
 		pr("Är det här? i= %zu \n", i);
-		for(j = 0; j < var; j++) {
+		for(j = 0; j < var-1; j++) {
 			pr("Eller här? j= %zu \n", j);
 			t[i][j] = divq(t[i][j],t[i][var-1]);
 			pr("Eller kanske här? var = %zu\n", var);
 		}
+		t[i][j].p = 1;
+		t[i][j].q = 1;
 	}
 
 	pr("Loop2 är klar\n");
