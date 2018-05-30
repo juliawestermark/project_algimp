@@ -69,6 +69,26 @@ typedef struct rational
 // 	return x;
 // }
 
+bool isPowerOfTwo(long long x) {
+	return x != 0 && (x & (x-1)) == 0;
+}
+
+void reduceByTwo(rat x) {
+	long long a = x.p;
+	long long b = x.q;
+
+	int count = 0;
+
+	while (isPowerOfTwo(a) && isPowerOfTwo(b)) {
+		count++;
+	}
+
+	if (count > 0) {
+		x.p >>= count;
+		x.q >>= count;
+	}
+}
+
 rat reduce(rat x)
 {
 	long long a = x.p;
