@@ -96,7 +96,7 @@ rat reduce(rat x)
 		{
 			b -= a;
 		}
-		if (a < SHRT_MAX && b < SHRT_MAX)
+		if (a < UCHAR_MAX && b < UCHAR_MAX)
 			break;
 	}
 
