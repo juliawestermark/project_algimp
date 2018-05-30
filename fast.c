@@ -246,7 +246,6 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		for(i = n2; i < ineq; i++) {
 			pr("Loop 515\n");
 			if(q[i].p < 0)
-				pr("Hejdå 1\n");
 				return 0;
 		}
 
@@ -254,11 +253,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 			return 1;
 		
 		if (compare(B,b)) {
-			pr("Hejdå 2\n");
 			return 0;
 		}
 
-		pr("Hejdå 3\n");
 		return 1;
 	}
 
