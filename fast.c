@@ -147,7 +147,7 @@ rat divq(rat x, rat y)
 		z.p = -z.p;
 		z.q = -z.q;
 	}
-
+	
 	z = reduce(z);
 
 	return z;
