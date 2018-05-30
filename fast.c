@@ -184,7 +184,7 @@ rat getDiff(rat x, rat y)
 	rat z;
 	
 	z = subq(x, y);
-	// z = reduce(z);
+	z = reduce(z);
 
 	return z;
 }
