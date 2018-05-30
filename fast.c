@@ -90,10 +90,22 @@ typedef struct rational
 // 	// }
 // }
 
+long long test(long long a, long long b) {
+	if (a > b) {
+		a -= b;
+	} else if (a < b) {
+		b -= a;
+	} else {
+		return a;
+	}
+	return test(a,b);
+}
+
 rat reduce(rat x)
 {
 	long long a = x.p;
 	long long b = x.q;
+	long long c = 1;
 
 	if (x.p == 0 || x.q == 0)
 	{
@@ -107,20 +119,22 @@ rat reduce(rat x)
 		a = -a;
 	}
 
-	while (a != b)
-	{
-		if (a > b)
-		{
-			a -= b;
-		}
-		else
-		{
-			b -= a;
-		}
-	}
+	c = test(a,b);
 
-	x.p /= a;
-	x.q /= a;
+	// while (a != b)
+	// {
+	// 	if (a > b)
+	// 	{
+	// 		a -= b;
+	// 	}
+	// 	else
+	// 	{
+	// 		b -= a;
+	// 	}
+	// }
+
+	x.p /= c;
+	x.q /= c;
 
 	return x;
 }
