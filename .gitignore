@@ -6,3 +6,5 @@ note
 a.out*
 fastOld*
 test.g*
+*.gcno
+*.gcda
