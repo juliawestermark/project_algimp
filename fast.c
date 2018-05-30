@@ -80,13 +80,14 @@ void reduceByTwo(rat x) {
 	int count = 0;
 
 	while (isPowerOfTwo(a) && isPowerOfTwo(b)) {
-		count++;
+		x.p >>= 1;
+		x.q >>= 1;
 	}
 
-	if (count > 0) {
-		x.p >>= count;
-		x.q >>= count;
-	}
+	// if (count > 0) {
+	// 	x.p >>= count;
+	// 	x.q >>= count;
+	// }
 }
 
 rat reduce(rat x)
