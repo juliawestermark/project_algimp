@@ -18,6 +18,16 @@ typedef struct rational
 	long long q;
 } rat;
 
+euclid(long long a, long long b) {
+	if (a==b) {
+		return a;
+	}
+	else {    
+		a -= b;
+		euclid(max(a,b), min(a,b));
+	}
+}
+
 rat reduce(rat x)
 {
 	long long a = x.p;
@@ -35,23 +45,48 @@ rat reduce(rat x)
 		a = -a;
 	}
 
-	while (a != b)
-	{
-		if (a > b)
-		{
-			a -= b;
-		}
-		else
-		{
-			b -= a;
-		}
-	}
-
+	a = euclid(x.p,x.q);
+	
 	x.p /= a;
 	x.q /= a;
 
 	return x;
 }
+
+// rat reduce(rat x)
+// {
+// 	long long a = x.p;
+// 	long long b = x.q;
+
+// 	if (a == 0 || b == 0)
+// 	{
+// 		x.p = 0;
+// 		x.q = 1;
+// 		return x;
+// 	}
+
+// 	if (a < 0)
+// 	{
+// 		a = -a;
+// 	}
+
+// 	while (a != b)
+// 	{
+// 		if (a > b)
+// 		{
+// 			a -= b;
+// 		}
+// 		else
+// 		{
+// 			b -= a;
+// 		}
+// 	}
+
+// 	x.p /= a;
+// 	x.q /= a;
+
+// 	return x;
+// }
 
 rat subq(rat x, rat y)
 {
