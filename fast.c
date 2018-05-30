@@ -197,8 +197,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		/** Do nothing */
 	} else {
 		pr("Else rad 477\n");
-		rat B = (n1 > 0) ? q[0] : ;
-		rat b = (n2 != n1) ? q[n1] : ;
+		rat B;
+		rat b;
 
 		#if DEBUG
 		pr("Efter steg någonting\n");
@@ -212,15 +212,15 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		pr("\n");
 		#endif
 
-		// if (n1 == n2) {
-		// 	b.q=1;
-		// 	b.p = LONG_MIN/2;
-		// }
+		if (n1 == n2) {
+			b.q=1;
+			b.p = LONG_MIN/2;
+		}
 
-		// if (n1 == 0) {
-		// 	B.q=1;
-		// 	B.p = LONG_MAX/2;
-		// }
+		if (n1 == 0) {
+			B.q=1;
+			B.p = LONG_MAX/2;
+		}
 
 		pr("var, n1, n2, ineq = %zu, %zu, %zu, %zu", var, n1, n2, ineq);
 
