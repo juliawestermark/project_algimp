@@ -91,15 +91,20 @@ void reduceByTwo(rat x) {
 
 rat reduce(rat x)
 {
-	long long a = x.p;
-	long long b = x.q;
+	long long a;
+	long long b;
 
-	if (a == 0 || b == 0)
+	if (x.p == 0 || x.q == 0)
 	{
 		x.p = 0;
 		x.q = 1;
 		return x;
 	}
+
+	reduceByTwo(x);
+
+	a = x.p;
+	b = x.q;
 
 	if (a < 0)
 	{
