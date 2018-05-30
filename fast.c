@@ -24,7 +24,9 @@ long long euclid(long long a, long long b) {
 	}
 	else {    
 		a -= b;
-		euclid(max(a,b), min(a,b));
+		long long max = a > b ? a : b;
+		long long min = a < b ? a : b;
+		euclid(max, min);
 	}
 }
 
