@@ -69,31 +69,63 @@ typedef struct rational
 // 	return x;
 // }
 
-bool isPowerOfTwo(long long x) {
-	return x != 0 && (x & (x-1)) == 0;
-}
+// bool isPowerOfTwo(long long x) {
+// 	return x != 0 && (x & (x-1)) == 0;
+// }
 
-void reduceByTwo(rat x) {
-	long long a = x.p;
-	long long b = x.q;
+// void reduceByTwo(rat x) {
+// 	long long a = x.p;
+// 	long long b = x.q;
 
-	int count = 0;
+// 	int count = 0;
 
-	while (isPowerOfTwo(a) && isPowerOfTwo(b)) {
-		x.p >>= 1;
-		x.q >>= 1;
-	}
+// 	while (isPowerOfTwo(a) && isPowerOfTwo(b)) {
+// 		x.p >>= 1;
+// 		x.q >>= 1;
+// 	}
 
-	// if (count > 0) {
-	// 	x.p >>= count;
-	// 	x.q >>= count;
-	// }
+// 	// if (count > 0) {
+// 	// 	x.p >>= count;
+// 	// 	x.q >>= count;
+// 	// }
+// }
+
+long long gcd(long long u, long long v)
+{
+    // simple cases (termination)
+    if (u == v)
+        return u;
+
+    if (u == 0)
+        return v;
+
+    if (v == 0)
+        return u;
+
+    // look for factors of 2
+    if (~u & 1) // u is even
+    {
+        if (v & 1) // v is odd
+            return gcd(u >> 1, v);
+        else // both u and v are even
+            return gcd(u >> 1, v >> 1) << 1;
+    }
+
+    if (~v & 1) // u is odd, v is even
+        return gcd(u, v >> 1);
+
+    // reduce larger argument
+    if (u > v)
+        return gcd((u - v) >> 1, v);
+
+    return gcd((v - u) >> 1, u);
 }
 
 rat reduce(rat x)
 {
-	long long a;
-	long long b;
+	long long a = x.p;
+	long long b = x.q;
+	long long c;
 
 	if (x.p == 0 || x.q == 0)
 	{
@@ -102,33 +134,53 @@ rat reduce(rat x)
 		return x;
 	}
 
-	reduceByTwo(x);
-
-	a = x.p;
-	b = x.q;
-
 	if (a < 0)
 	{
 		a = -a;
 	}
 
-	while (a != b)
-	{
-		if (a > b)
-		{
-			a -= b;
-		}
-		else
-		{
-			b -= a;
-		}
-	}
+	c = gcd(a, b);
 
 	x.p /= a;
 	x.q /= a;
 
 	return x;
 }
+
+// rat reduce(rat x)
+// {
+// 	long long a = x.p;
+// 	long long b = x.q;
+
+// 	if (x.p == 0 || x.q == 0)
+// 	{
+// 		x.p = 0;
+// 		x.q = 1;
+// 		return x;
+// 	}
+
+// 	if (a < 0)
+// 	{
+// 		a = -a;
+// 	}
+
+// 	while (a != b)
+// 	{
+// 		if (a > b)
+// 		{
+// 			a -= b;
+// 		}
+// 		else
+// 		{
+// 			b -= a;
+// 		}
+// 	}
+
+// 	x.p /= a;
+// 	x.q /= a;
+
+// 	return x;
+// }
 
 rat subq(rat x, rat y)
 {
