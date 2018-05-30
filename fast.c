@@ -197,8 +197,8 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 		/** Do nothing */
 	} else {
 		pr("Else rad 477\n");
-		rat B;
-		rat b;
+		rat B = (B[0] != NULL) ? B[0] : NULL;
+		rat b = (b[0] != NULL) ? b[0] : NULL;
 
 		#if DEBUG
 		pr("Efter steg någonting\n");
@@ -224,9 +224,11 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 		pr("var, n1, n2, ineq = %zu, %zu, %zu, %zu", var, n1, n2, ineq);
 
-		for (i = 0; i < n1; i++) {
+		// for (i = 0; i < n1; i++) {
+		for (i = 1; i < n1; i++) {
 			pr("Loop 501a\n i=%zu\n", i);
-			if (i == 0 || compare(q[i],B)){
+			// if (i == 0 || compare(q[i],B)){
+			if (compare(q[i],B)){
 				B = q[i];
 				pr("Loop 501b\n B=%lld \n", B.p);
 			}
@@ -234,10 +236,12 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 		pr("Mellan for typ rad 523\n \n");
 		
-		for(i = n1; i < n2; i++) {
+		// for(i = n1; i < n2; i++) {
+		for(i = n1+1; i < n2; i++) {
 			pr("Loop 509a\n i=%zu\n", i);
 			pr("Loop 509a\n b=%lld\n", b.p);
-			if (i == n1 || compare(b,q[i])){
+			// if (i == n1 || compare(b,q[i])){
+			if (compare(b,q[i])){
 				b = q[i];
 				pr("Loop 509b\n b=%lld \n", b.p);
 			}
