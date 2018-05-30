@@ -96,8 +96,6 @@ rat reduce(rat x)
 		{
 			b -= a;
 		}
-		if (a < INT_MAX && b < INT_MAX && a%b == 0)
-			break;
 	}
 
 	x.p /= a;
