@@ -246,13 +246,16 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 
 	/** STEP 3 */
 
+	rat divider;
+
 	for(i = 0; i < n2; i++) {
+		divider = t[i][var-1];
 		pr("Loop 2\n");
-		q[i] = divq(q[i],t[i][var-1]);
+		q[i] = divq(q[i],divider);
 		pr("Är det här? i= %zu \n", i);
 		for(j = 0; j < var-1; j++) {
 			pr("Eller här? j= %zu \n", j);
-			t[i][j] = divq(t[i][j],t[i][var-1]);
+			t[i][j] = divq(t[i][j],divider);
 			pr("Eller kanske här? var = %zu\n", var);
 		}
 		t[i][j].p = 1;
