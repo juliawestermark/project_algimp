@@ -18,89 +18,6 @@ typedef struct rational
 	long long q;
 } rat;
 
-// long long euclid(long long a, long long b) {
-// 	if (a==b) {
-// 		return a;
-// 	}
-// 	else {    
-// 		a -= b;
-// 		long long max = (a > b) ? a : b;
-// 		long long min = (a < b) ? a : b;
-// 		euclid(max, min);
-// 	}
-// }
-
-// long long euclid(long long a, long long b) {
-// 	if (a==b) {
-// 		return a;
-// 	}
-// 	else {    
-// 		a -= b;
-// 		// long long max = (a > b) ? a : b;
-// 		// long long min = (a < b) ? a : b;
-// 		long long max1 = maxi(a,b);
-// 		long long min1 = mini(a,b);
-// 		return euclid(max1,min1);
-// 	}
-// }
-
-// rat reduce(rat x)
-// {
-// 	long long a = x.p;
-// 	long long b = x.q;
-
-// 	if (a == 0 || b == 0)
-// 	{
-// 		x.p = 0;
-// 		x.q = 1;
-// 		return x;
-// 	}
-
-// 	if (a < 0)
-// 	{
-// 		a = -a;
-// 	}
-
-// 	a = euclid(a,b);
-	
-// 	x.p /= a;
-// 	x.q /= a;
-
-// 	return x;
-// }
-
-// bool isPowerOfTwo(long long x) {
-// 	return x != 0 && (x & (x-1)) == 0;
-// }
-
-// void reduceByTwo(rat x) {
-// 	long long a = x.p;
-// 	long long b = x.q;
-
-// 	int count = 0;
-
-// 	while (isPowerOfTwo(a) && isPowerOfTwo(b)) {
-// 		x.p >>= 1;
-// 		x.q >>= 1;
-// 	}
-
-// 	// if (count > 0) {
-// 	// 	x.p >>= count;
-// 	// 	x.q >>= count;
-// 	// }
-// }
-
-long long test(long long a, long long b) {
-	if (a > b) {
-		a -= b;
-	} else if (a < b) {
-		b -= a;
-	} else {
-		return a;
-	}
-	return test(a,b);
-}
-
 rat reduce(rat x)
 {
 	long long a = x.p;
@@ -119,19 +36,17 @@ rat reduce(rat x)
 		a = -a;
 	}
 
-	c = test(a,b);
-
-	// while (a != b)
-	// {
-	// 	if (a > b)
-	// 	{
-	// 		a -= b;
-	// 	}
-	// 	else
-	// 	{
-	// 		b -= a;
-	// 	}
-	// }
+	while (a != b)
+	{
+		if (a > b)
+		{
+			a -= b;
+		}
+		else
+		{
+			b -= a;
+		}
+	}
 
 	x.p /= c;
 	x.q /= c;
