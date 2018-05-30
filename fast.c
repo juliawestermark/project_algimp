@@ -73,6 +73,7 @@ rat reduce(rat x)
 {
 	long long a = x.p;
 	long long b = x.q;
+	int count = 0;
 
 	if (a == 0 || b == 0)
 	{
@@ -86,7 +87,7 @@ rat reduce(rat x)
 		a = -a;
 	}
 
-	while (a != b)
+	while (a != b && count < 5)
 	{
 		if (a > b)
 		{
@@ -96,6 +97,7 @@ rat reduce(rat x)
 		{
 			b -= a;
 		}
+		count ++;
 	}
 
 	x.p /= a;
