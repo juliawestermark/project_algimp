@@ -108,15 +108,15 @@ bool compare(rat small, rat big)
 		return (subq(small,big).p < 0);
 }
 
-rat getDiff(rat x, rat y)
-{
-	rat z;
+// rat getDiff(rat x, rat y)
+// {
+// 	rat z;
 	
-	z = subq(x, y);
-	// z = reduce(z);
+// 	z = subq(x, y);
+// 	z = reduce(z);
 
-	return z;
-}
+// 	return z;
+// }
 
 bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 {
@@ -288,9 +288,9 @@ bool eliminate(size_t ineq, size_t var, rat t[ineq][var], rat q[ineq])
 	for(i = 0; i < n1; i++) {
 		for(k = n1; k < n2; k++){
 			for(j = 0; j< varPrim ; j++){
-				newT[count][j] = getDiff(t[i][j],t[k][j]);
+				newT[count][j] = subq(t[i][j],t[k][j]);
 			}
-			newQ[count] = getDiff(q[i],q[k]);
+			newQ[count] = subq(q[i],q[k]);
 			count++;
 		}
 	}
