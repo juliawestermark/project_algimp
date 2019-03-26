@@ -1,53 +1,54 @@
 project_algimp
+==============
 
-GIT
+## GIT
 
-Choose directory where we look at
+### Choose directory where we look at
 
-git init
+`git init`
 
-Add file to track
+### Add file to track
 
-git add [file]
+`git add [file]`
 
-Get status of the directory
+### Get status of the directory
 
-gif status
+`gif status`
 
-Changes to be committed
+### Changes to be committed
 
-git commit -m "[message]"
+`git commit -m "[message]"`
 
-See the log
+### See the log
 
-git log
+`git log`
 
-Get back to an older version
+### Get back to an older version
 
-git checkout [first 7 characters of commit nbr]
+`git checkout [first 7 characters of commit nbr]`
 
-See branch
+### See branch
 
-git branch
+`git branch`
 
-Create a new branch
+### Create a new branch
 
-git checkout -b [name of new branch]
+`git checkout -b [name of new branch]`
 
-Add all the files
+### Add all the files
 
-git add -A
+`git add -A`
 
-PUSH/PULL
+## PUSH/PULL
 
-Pull up to date code
+### Pull up to date code
 
-git pull origin [name of branch]
+`git pull origin [name of branch]`
 
-Push your code to GitHub
+### Push your code to GitHub
 
-git push origin [name of branch]
+`git push origin [name of branch]`
 
-STEPS FOR ADDING FILE
+## STEPS FOR ADDING FILE
 
-add-commit-pull-push
+`add-commit-pull-push`
